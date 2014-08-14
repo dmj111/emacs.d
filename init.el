@@ -1,5 +1,8 @@
 ;;; init.el --- Emacs configuration file
 
+;;; Commentary:
+
+
 ;;; Code:
 
 (defconst *config-dir* (file-name-directory load-file-name)
@@ -12,8 +15,14 @@
 
 (require 'init-utilities)
 (require 'init-ui)
+(require 'init-elpa)
 
-;;; Commentary:
+
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 
 (message "finished loading")
 

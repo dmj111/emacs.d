@@ -3,7 +3,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'cl)
 (require 'package)
+
 
 ;;; Also use Melpa for most packages
 (add-to-list 'package-archives
@@ -14,10 +16,27 @@
 (package-initialize)
 
 
+(defvar my-packages
+  '(auto-complete
+    ;; ein
+    ;; ess
+    ;; google-c-style
+    magit
+    markdown-mode
+    paredit
+    ;; solarized-theme
+    undo-tree
+    yasnippet))
 
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+(unless (every #'package-installed-p my-packages)
+  (package-refresh-contents)
+  (mapc '(lambda (package)
+           (message "checking package")
+           (unless (package-installed-p package)
+             (package-install package)))
+        my-packages))
+
+
 
 (provide 'init-elpa)
 
