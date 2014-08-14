@@ -1,15 +1,16 @@
+* Emacs startup config
 * Using this file
+  To try out this file without actually installing it, run:
 
- - =-Q= quick
+#+BEGIN_EXAMPLE
+  emacs -nw -L . -l init.el
+#+END_EXAMPLE
+
  - =-nw= no window
  - =-L .= add . to search path
  - =-l init.el= run init.el
-
-#+BEGIN_EXAMPLE
-  emacs -Q -nw -L . -l init.el
-#+END_EXAMPLE
-
+ - =-Q= (maybe?  quick)
 
 * References
-  - Emacs Prelude
+  - [[https://github.com/bbatsov/prelude][Emacs Prelude]]
   - [[https://github.com/purcell/emacs.d][Steve Purcell's startup]]
