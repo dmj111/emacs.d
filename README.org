@@ -1,0 +1,15 @@
+* Using this file
+
+ - =-Q= quick
+ - =-nw= no window
+ - =-L .= add . to search path
+ - =-l init.el= run init.el
+
+#+BEGIN_EXAMPLE
+  emacs -Q -nw -L . -l init.el
+#+END_EXAMPLE
+
+
+* References
+  - Emacs Prelude
+  - [[https://github.com/purcell/emacs.d][Steve Purcell's startup]]
