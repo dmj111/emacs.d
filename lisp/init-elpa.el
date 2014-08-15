@@ -24,7 +24,7 @@
     magit
     markdown-mode
     paredit
-    ;; solarized-theme
+    solarized-theme
     undo-tree
     yasnippet))
 
