@@ -34,6 +34,7 @@
 (require 'init-ui)
 (require 'init-elpa)
 (require 'init-theme)
+(require 'init-keybindings)
 
 
 (require 'init-local nil t)
