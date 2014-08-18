@@ -37,6 +37,7 @@
 (require 'init-keybindings)
 
 
+(require 'init-magit)
 (require 'init-local nil t)
 
 
