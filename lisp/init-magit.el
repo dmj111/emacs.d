@@ -3,9 +3,7 @@
 ;;; Code:
 
 (after 'magit-autoloads
-  (global-set-key "\C-xg" 'magit-status)
-
-  )
+  (global-set-key "\C-xg" 'magit-status))
 
 (provide 'init-magit)
 

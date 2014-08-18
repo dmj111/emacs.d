@@ -21,6 +21,7 @@
     ;; ein
     ;; ess
     ;; google-c-style
+    smex
     magit
     markdown-mode
     paredit

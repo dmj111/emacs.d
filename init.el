@@ -36,9 +36,14 @@
 (require 'init-theme)
 (require 'init-keybindings)
 
-
+(require 'init-ido)
 (require 'init-magit)
+(require 'init-python)
+(require 'init-org)
+
+;; Load the local file, if it exists.
 (require 'init-local nil t)
+
 
 
 (require 'server)
