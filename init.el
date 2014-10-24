@@ -654,6 +654,13 @@
   (setq undo-tree-visualizer--timestamps t)
   (message "foo"))
 
+
+
+(require 'uniquify)
+(require 'recentf)
+(recentf-mode t)
+(winner-mode t)
+
 (provide 'init)
 
 ;;; init.el ends here
