@@ -6,6 +6,14 @@
 
 ;;; Code:
 
+;; Turn off mouse interface early in startup to avoid momentary display
+(call-if-fbound menu-bar-mode -1)
+(call-if-fbound 'tool-bar-mode -1)
+(call-if-fbound 'scroll-bar-mode -1)
+
+(setq inhibit-startup-screen t)
+
+
 (require 'cl)
 
 (defconst *config-dir* (file-name-directory load-file-name)
@@ -65,12 +73,6 @@
 
 ;; User interface
 
-;; Turn off mouse interface early in startup to avoid momentary display
-(call-if-fbound menu-bar-mode -1)
-(call-if-fbound 'tool-bar-mode -1)
-(call-if-fbound 'scroll-bar-mode -1)
-
-(setq inhibit-startup-screen t)
 
 
 (setq-default indent-tabs-mode nil)
@@ -96,9 +98,11 @@
 
 ;;; Also use Melpa for most packages
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
+  '("melpa" . "http://melpa.org/packages/") t)
+
+;; (add-to-list 'package-archives
+;;  '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
 
 (package-initialize)
 
