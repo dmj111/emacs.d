@@ -2,7 +2,9 @@
 
 ;;; Commentary:
 
-
+;; TODO: winner-mode
+;; TODO: ace-jump
+;; 
 
 ;;; Code:
 
@@ -664,6 +666,14 @@
 (require 'recentf)
 (recentf-mode t)
 (winner-mode t)
+
+;;;; Path
+
+;; From http://www.emacswiki.org/emacs/ExecPath
+;;    (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
+;;    (setq exec-path (append exec-path '("/sw/bin")))
+;;  To add stuff to the path.  (This is a local setting...)
+
 
 (provide 'init)
 
