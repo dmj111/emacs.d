@@ -2,8 +2,23 @@
 
 ;;; Commentary:
 
-;; TODO: ace-jump
+;; stuff to practice:
+;; - C-/ to undo
+;; M-0 (to 9) instead of C-u 8
+;; M-a, M-e
+;; C-M (move by expression) f,b,d,u
+;; C-M-s regexp forward search
+;; M-m -- move back to indentation
+;; C-u M-g M-g -- goto line in prev buffer (matches line number at point)
 ;; 
+
+;;;; TO LEARN
+;; TODO: ace-jump
+;; http://www.emacswiki.org/emacs/ImenuMode#toc10 -ido powered imenu
+;; http://masteringemacs.org/article/effective-editing-movement ETAGS
+;; C-x C-n / C-u C-x C-n  set /unset goal column
+;; subword mode for CamelCase
+;;
 
 ;;; Code:
 
@@ -153,6 +168,7 @@
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
+
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; backward-kill-word is a fast way to delete
