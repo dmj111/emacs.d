@@ -10,7 +10,7 @@
 ;; C-M-s regexp forward search
 ;; M-m -- move back to indentation
 ;; C-u M-g M-g -- goto line in prev buffer (matches line number at point)
-;; 
+;;
 
 ;;;; TO LEARN
 ;; TODO: ace-jump
@@ -69,7 +69,7 @@
   "`eval-after-load' MODE evaluate BODY."
   (declare (indent defun))
   `(eval-after-load ,mode
-     '(progn 
+     '(progn
         (message "after loading %s" ,mode)
         ,@body)))
 
@@ -213,7 +213,7 @@
 
 
   ;; full-scrreen magit-status
-  ;; from magnars -- 
+  ;; from magnars --
   ;;    https://github.com/magnars/.emacs.d/blob/master/setup-magit.el
 
   (defadvice magit-status (around magit-fullscreen activate)
@@ -284,7 +284,7 @@
 (defun recentf-ido-find-file ()
   "Find recent file with ido."
   (interactive)
-  (let ((file (ido-completing-read 
+  (let ((file (ido-completing-read
                "Chose recent file:"
                (-map 'abbreviate-file-name recentf-list) nil t)))
     (when file (find-file file))))
@@ -297,7 +297,7 @@
 ;;;; programming mode
 ;; TODO: flyspell on mac!!
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-(add-hook 'prog-mode-hook 
+(add-hook 'prog-mode-hook
           (lambda () (add-hook 'before-save-hook
                                'whitespace-cleanup nil t)))
 
@@ -323,6 +323,7 @@
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+
 
 (require 'server)
 (unless (server-running-p)
