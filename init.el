@@ -17,10 +17,16 @@
 ;; http://www.emacswiki.org/emacs/ImenuMode#toc10 -ido powered imenu
 ;; http://masteringemacs.org/article/effective-editing-movement ETAGS
 ;; C-x C-n / C-u C-x C-n  set /unset goal column
-;; subword mode for CamelCase
+;; subword mode for Camel Case
 ;;
 
 ;;; Code:
+
+;;;; Debugging
+;; Debug if there is an error
+;; (setq debug-on-error t)
+;; Don't limit the print out of a variable
+(setq eval-expression-print-length nil)
 
 ;; From emacswiki, by AaronL
 (defun call-if-fbound (function &rest args)
@@ -202,6 +208,9 @@
 ;; like a filename, ido assumes that is what you want.
 (setq ido-use-filename-at-point 'guess)
 
+;; Avoid pinging with C-x f
+(setq ffap-machine-p-known 'reject)
+
 ;; (setq ido-use-url-at-point t)
 ;; this can give preferences to more common files.
 ;; (setq ido-file-extensions-order '(".py" ".cc"))
@@ -323,6 +332,37 @@
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+
+
+;;;; js2
+
+(after "js2-mode-autoloads"
+  (add-to-list 'auto-mode-alist '("\\.json" . js-mode))
+  (add-hook 'js-mode-hook 'js2-minor-mode)
+  (setq js2-highlight-level 3)
+
+  (after "ac-js2-autoloads"
+    (add-hook 'js2-mode-hook 'ac-js2-mode)))
+
+
+;;;; auto-complete
+(after "auto-complete-autoloads"
+  (require 'auto-complete-config)
+  (add-to-list 'ac-dictionary-directories
+               (expand-file-name "ac-dict" *config-dir*))
+  (ac-config-default)
+  ;; Trigger key
+  (ac-set-trigger-key "TAB")
+  (ac-set-trigger-key "<tab>"))
+
+;;;; yasnippet
+
+(after "yasnippet-autoloads"
+  (yas-global-mode 1))
+
+
+;;;; c++
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 
 (require 'server)
