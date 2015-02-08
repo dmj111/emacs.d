@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: drill-simple
+# key: drill-simple
+# binding: direct-keybinding
+# --
+* Item           :drill:
+  ${1:the question goes here...}
+** Answer
+  ${2:the answer goes here...}

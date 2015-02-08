@@ -49,7 +49,7 @@
 (defalias 'qrr 'query-replace-regexp)
 
 
-(require 'cl)
+
 
 (defconst *config-dir* (file-name-directory load-file-name)
   "Root directory for the configuration")
@@ -97,14 +97,18 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(global-set-key (quote [M-down])  'scroll-up-line)
+(global-set-key (quote [M-up])  'scroll-down-line)
 
 ;;;; packages
-
+(require 'cl)
 (require 'package)
 
 ;;; Also use Melpa for most packages
 (add-to-list 'package-archives
-  '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/") t)
 
 ;; Stable packages?
 ;; (add-to-list 'package-archives
@@ -120,7 +124,7 @@
     magit
     markdown-mode
     paredit
-    solarized-theme
+    ;; solarized-theme
     undo-tree
     yasnippet))
 
@@ -168,6 +172,18 @@
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 
+;; From emacs-prelude
+;; hippie expand is dabbrev expand on steroids
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
 
 
 ;; Sometimes M-x is just too hard to type.
@@ -338,9 +354,10 @@
 
 (after "js2-mode-autoloads"
   (add-to-list 'auto-mode-alist '("\\.json" . js-mode))
-  (add-hook 'js-mode-hook 'js2-minor-mode)
-  (setq js2-highlight-level 3)
+  ;; (add-hook 'js-mode-hook 'js2-minor-mode)
+  (setq js2-highlight-level 3))
 
+(after 'js2-mode
   (after "ac-js2-autoloads"
     (add-hook 'js2-mode-hook 'ac-js2-mode)))
 
@@ -383,9 +400,39 @@
 ;;    (setq exec-path (append exec-path '("/sw/bin")))
 ;;  To add stuff to the path.  (This is a local setting...)
 
+(after 'org-mode
+  ;; http://endlessparentheses.com/inserting-the-kbd-tag-in-org-mode.html?source=rss
+  (define-key org-mode-map "\C-ck" #'endless/insert-key)
+  (defun endless/insert-key (key)
+    "Ask for a key then insert its description.
+Will work on both org-mode and any mode that accepts plain html."
+    (interactive "kType key sequence: ")
+    (let* ((is-org-mode (derived-mode-p 'org-mode))
+           (tag (if is-org-mode
+                    "@@html:<kbd>%s</kbd>@@"
+                  "<kbd>%s</kbd>")))
+      (if (null (equal key "
+"))
+          (insert
+           (format tag (help-key-description key nil)))
+        (insert (format tag ""))
+        (forward-char (if is-org-mode -8 -6))))))
+
+(after "org-plus-contrib-autoloads"
+  (require 'org-drill)
+  )
+
+(after "flycheck-autoloads"
+  (add-hook 'js-mode-hook
+          (lambda () (flycheck-mode t))))
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 (provide 'init)
+
+;; Consider something like this in local:
+;(add-to-list 'exec-path "/usr/local/bin" t)
+;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 
 ;;; init.el ends here
 
