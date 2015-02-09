@@ -48,16 +48,12 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'qrr 'query-replace-regexp)
 
-
-
-
 (defconst *config-dir* (file-name-directory load-file-name)
   "Root directory for the configuration")
 (defconst *local-dir* (expand-file-name "local" *config-dir*)
   "Root directory for local configuation")
 
 (setq custom-file (expand-file-name "custom.el" *local-dir*))
-
 
 (defconst *is-mac* (eq system-type 'darwin))
 
@@ -136,7 +132,6 @@
               (package-install package)))
         my-packages))
 
-
 ;;;; Theme
 
 (defvar my-default-theme 'solarized-dark
@@ -198,13 +193,11 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 
-
 ;; This is for when alt is not meta.   I need my meta.
 (setq x-alt-keysym 'meta)
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta))
-
 
 ;;;; ido
 ;; Its built-in...
@@ -254,7 +247,6 @@
 
 (after 'magit
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
-
 
 ;;;; python
 
@@ -372,9 +364,13 @@
   (ac-set-trigger-key "TAB")
   (ac-set-trigger-key "<tab>"))
 
-;;;; yasnippet
 
+
+;;;; yasnippet
 (after "yasnippet-autoloads"
+  (setq yas-snippet-dirs
+        (append yas-snippet-dirs
+                (expand-file-name "snippets" *local-dir*)))
   (yas-global-mode 1))
 
 
@@ -382,23 +378,11 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;;;; cpputils-cmake
-(after "cpputils-cmake-autoloads"
-
-  )
+(after "cpputils-cmake-autoloads")
 
 (after "google-c-style-autoloads"
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
-;;;; Path
-
-;; From http://www.emacswiki.org/emacs/ExecPath
-;;    (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
-;;    (setq exec-path (append exec-path '("/sw/bin")))
-;;  To add stuff to the path.  (This is a local setting...)
 
 (after 'org-mode
   ;; http://endlessparentheses.com/inserting-the-kbd-tag-in-org-mode.html?source=rss
@@ -419,20 +403,47 @@ Will work on both org-mode and any mode that accepts plain html."
         (forward-char (if is-org-mode -8 -6))))))
 
 (after "org-plus-contrib-autoloads"
-  (require 'org-drill)
-  )
+  (require 'org-drill))
+
 
 (after "flycheck-autoloads"
   (add-hook 'js-mode-hook
           (lambda () (flycheck-mode t))))
 
+;;;; open-with
+
+(when *is-mac*
+  ;; Copied from emacs-prelude
+  (defun prelude-open-with ()
+    "Simple function that allows us to open the underlying
+file of a buffer in an external program."
+    (interactive)
+    (when buffer-file-name
+      (shell-command (concat
+                      (if (eq system-type 'darwin)
+                          "open"
+                        (read-shell-command "Open current file with: "))
+                      " "
+                      buffer-file-name))))
+
+  (global-set-key (kbd "C-c o") 'prelude-open-with))
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
+
 (provide 'init)
 
+
 ;; Consider something like this in local:
-;(add-to-list 'exec-path "/usr/local/bin" t)
-;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+;;;; Example init-local.el
+;;(add-to-list 'exec-path "/usr/local/bin" t)
+;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+;;(setq my-default-theme 'zenburn)
+;; (provide 'init-local)
 
 ;;; init.el ends here
 

@@ -3,6 +3,6 @@
 # key: drill_cloze
 # binding: direct-keybinding
 # --
-* Item
+* Item            :drill:                  
   ${1:question goes here with [answer] in brackets.  Use
-   [brackets||hint here] for hints.               
+   [brackets||hint here] for hints.}               
