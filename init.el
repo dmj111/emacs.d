@@ -57,12 +57,10 @@
 
 (defconst *is-mac* (eq system-type 'darwin))
 
+
+;; Add a local lisp directory to the load path.
 (add-to-list 'load-path (expand-file-name "lisp" *config-dir*))
 (add-to-list 'load-path (expand-file-name "local" *config-dir*))
-
-;; Try to load local settings ahead of time
-(require 'init-local-preload nil t)
-;;;; Utilities
 
 ;; Taken from http://milkbox.net/note/single-file-master-emacs-configuration/
 
@@ -74,6 +72,12 @@
      '(progn
         (message "after loading %s" ,mode)
         ,@body)))
+
+
+;; Try to load local settings ahead of time
+(require 'init-local-preload nil t)
+;;;; Utilities
+
 
 ;;;; User interface
 
@@ -427,6 +431,11 @@ file of a buffer in an external program."
                       buffer-file-name))))
 
   (global-set-key (kbd "C-c o") 'prelude-open-with))
+
+(defun clear-kill-ring ()
+  (interactive)
+  (setq kill-ring nil)
+  (garbage-collect))
 
 (require 'server)
 (unless (server-running-p)
