@@ -1,8 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: drill_cloze
-# key: drill_cloze
-# binding: direct-keybinding
-# --
-* Item            :drill:                  
-  ${1:question goes here with [answer] in brackets.  Use
-   [brackets||hint here] for hints.}               
