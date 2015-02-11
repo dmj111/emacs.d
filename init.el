@@ -31,9 +31,9 @@
 (setq eval-expression-print-length nil)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
-(menu-bar-mode nil)
-(tool-bar-mode nil)
-(scroll-bar-mode nil)
+;; (menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 (setq inhibit-startup-screen t)
 
@@ -117,7 +117,7 @@
     magit
     markdown-mode
     paredit
-    zenburn
+    zenburn-theme
     undo-tree
     yasnippet))
 
