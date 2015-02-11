@@ -20,6 +20,10 @@
 ;; subword mode for Camel Case
 ;;
 
+;; TODO
+;; - js2 setup
+;; - ace-jump/ace-window from irreal
+
 ;;; Code:
 
 ;;;; Debugging settings.
@@ -118,16 +122,20 @@
     markdown-mode
     paredit
     zenburn-theme
+    dash
     undo-tree
     yasnippet))
 
-(unless (every #'package-installed-p my-packages)
-  (package-refresh-contents)
-  (mapc #'(lambda (package)
-            (message "checking package")
-            (unless (package-installed-p package)
-              (package-install package)))
-        my-packages))
+(defun load-my-packages ()
+  (unless (every #'package-installed-p my-packages)
+    (package-refresh-contents)
+    (mapc #'(lambda (package)
+              (message "checking package")
+              (unless (package-installed-p package)
+                (package-install package)))
+          my-packages)))
+
+;; (load-my-packages)
 
 ;;;; Theme
 
@@ -393,6 +401,9 @@ Will work on both org-mode and any mode that accepts plain html."
 (after "flycheck-autoloads"
   (add-hook 'js-mode-hook
           (lambda () (flycheck-mode t))))
+
+;;;; winner
+(winner-mode t)
 
 ;;;; open-with
 
