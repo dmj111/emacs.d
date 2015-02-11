@@ -35,9 +35,11 @@
 (setq eval-expression-print-length nil)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
-;; (menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+;; The macro is for non-windowed emacs.
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
 
 (setq inhibit-startup-screen t)
 
