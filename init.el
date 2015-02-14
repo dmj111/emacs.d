@@ -379,7 +379,12 @@
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
 (after 'org-mode
+
+  (add-hook 'org-mode-hook (lambda ()
+                             (auto-fill-mode 1)))
+
   ;; http://endlessparentheses.com/inserting-the-kbd-tag-in-org-mode.html?source=rss
+
   (define-key org-mode-map "\C-ck" #'endless/insert-key)
   (defun endless/insert-key (key)
     "Ask for a key then insert its description.
