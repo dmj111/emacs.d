@@ -362,9 +362,9 @@
 
 ;;;; yasnippet
 (after 'yasnippet
-  (setq yas-snippet-dirs
-        (append yas-snippet-dirs
-                (expand-file-name "snippets" *local-dir*))))
+  (let ((local (expand-file-name "snippets" *local-dir*)))
+    (when (file-exists-p local)
+      (add-to-list 'yas-snippet-dirs local))))
 
 (after "yasnippet-autoloads"
   (yas-global-mode 1))
