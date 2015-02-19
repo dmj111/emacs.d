@@ -379,7 +379,6 @@
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
 (after 'org-mode
-
   (add-hook 'org-mode-hook (lambda ()
                              (auto-fill-mode 1)))
 
