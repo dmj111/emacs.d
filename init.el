@@ -378,7 +378,7 @@
 (after "google-c-style-autoloads"
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
-(after 'org-mode
+(after 'org
   (add-hook 'org-mode-hook (lambda ()
                              (auto-fill-mode 1)))
 
