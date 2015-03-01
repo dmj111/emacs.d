@@ -401,8 +401,10 @@ Will work on both org-mode and any mode that accepts plain html."
         (forward-char (if is-org-mode -8 -6))))))
 
 (after "org-plus-contrib-autoloads"
-  (require 'org-drill))
+  (autoload 'org-drill "org-drill" "run org drill" t))
 
+(after 'org-drill
+  (setq org-drill-add-random-noise-to-intervals-p t))
 
 (after "flycheck-autoloads"
   (add-hook 'js-mode-hook
