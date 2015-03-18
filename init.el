@@ -342,7 +342,7 @@
 ;;;; js2
 (after "js2-mode-autoloads"
   (add-to-list 'auto-mode-alist '("\\.json" . js-mode))
-  ;; (add-hook 'js-mode-hook 'js2-minor-mode)
+  (add-hook 'js-mode-hook 'js2-minor-mode)
   (setq js2-highlight-level 3))
 
 (after 'js2-mode
@@ -364,7 +364,13 @@
 (after 'yasnippet
   (let ((local (expand-file-name "snippets" *local-dir*)))
     (when (file-exists-p local)
-      (add-to-list 'yas-snippet-dirs local))))
+      (add-to-list 'yas-snippet-dirs local)))
+  (setq yas-prompt-functions
+        '(yas-ido-prompt
+          yas-x-prompt
+          yas-dropdown-prompt
+          yas-completing-prompt
+          yas-no-prompt)))
 
 (after "yasnippet-autoloads"
   (yas-global-mode 1))
@@ -409,6 +415,20 @@ Will work on both org-mode and any mode that accepts plain html."
 (after "flycheck-autoloads"
   (add-hook 'js-mode-hook
           (lambda () (flycheck-mode t))))
+
+
+(after "ace-window-autoloads"
+  ;; prefix arg swaps
+  ;; double prefix deletes
+  (global-set-key [(f12)] 'ace-window))
+
+(after "ace-jump-mode-autoloads"
+  (require 'ace-jump-mode)
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
+
+
+(after "lacarte-autloads"
+  (global-set-key [?\M-`] 'lacarte-execute-command))
 
 ;;;; winner
 (winner-mode t)
