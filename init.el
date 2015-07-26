@@ -362,6 +362,8 @@
 
 ;;;; yasnippet
 (after 'yasnippet
+  (yas-global-mode -1)
+  (add-hook 'prog-mode-hook 'yas-minor-mode)
   (let ((local (expand-file-name "snippets" *local-dir*)))
     (when (file-exists-p local)
       (add-to-list 'yas-snippet-dirs local)))
@@ -423,6 +425,11 @@ Will work on both org-mode and any mode that accepts plain html."
   (global-set-key [(f12)] 'ace-window))
 
 (after "ace-jump-mode-autoloads"
+       (add-hook 'ace-jump-mode-before-jump-hook
+                (lambda () (push-makr (point) t))))
+
+;; http://irreal.org/blog/?p=760
+(after "ace-jump-mode-autoloads"
   (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
@@ -456,6 +463,9 @@ file of a buffer in an external program."
   (setq kill-ring nil)
   (garbage-collect))
 
+(defalias 'list-buffers 'ibuffer)
+
+;; server
 (require 'server)
 (unless (server-running-p)
   (server-start))
