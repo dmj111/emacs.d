@@ -1,5 +1,32 @@
-* Emacs startup config
-* Using this file
+#+title: Emacs startup config
+
+* Using this setup
+
+  The easiest way to use this config is to clone this repo to your
+  =$HOME/.emacs.d= directory.
+  
+  #+BEGIN_EXAMPLE
+  git clone https://github.com/dmj111/emacs.d ~/.emacs.d
+  #+END_EXAMPLE
+
+  
+** Customizing
+
+   You can customize this startup without changing any of the files
+   from this repository.  
+   
+   To do so, create a =.emacs.d/local= directory.  In that directory,
+   optionally create =init-local.el= and =init-local-preload.el=.
+   =init-local-preload.el= is loaded early in the setup, and
+   =init-local.el= is loaded towards the end.
+
+   If you want to create custom snippet files, they go in
+   =local/snippets=.
+
+   You can create a git repo inside the local directory if you wish to
+   control the local customizations.
+
+* Trying this setup
   To try out this file without actually installing it, run:
 
 #+BEGIN_EXAMPLE

@@ -374,9 +374,6 @@
           yas-completing-prompt
           yas-no-prompt)))
 
-(after "yasnippet-autoloads"
-  (yas-global-mode 1))
-
 ;;;; c++
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
