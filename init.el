@@ -1,5 +1,7 @@
 ;;; init.el --- Emacs configuration file
 
+;;;; TODO: try use-package for the configuration
+
 ;;; Commentary:
 
 ;; stuff to practice:
@@ -19,7 +21,10 @@
 ;; C-x C-n / C-u C-x C-n  set /unset goal column
 ;; subword mode for Camel Case
 ;;
-
+;; - kmacro-set-counter and kmacro-insert-counter
+;;   looks like my C-x C-k keybindings interfere...
+;; - try avy mode instead of acejump
+;; -
 ;; TODO
 ;; - js2 setup
 ;; - ace-jump/ace-window from irreal
@@ -204,31 +209,33 @@
 (when *is-mac*
   (setq mac-command-modifier 'meta))
 
+(when nil
 ;;;; ido
-;; Its built-in...
-(require 'ido)
+  ;; Its built-in...
+  (require 'ido)
 
-;; Consider the settings that prelude uses.
-;; -- look at ido-ubiquitous
-;; -- flx-ido
+  ;; Consider the settings that prelude uses.
+  ;; -- look at ido-ubiquitous
+  ;; -- flx-ido
 
 ;;;; Ido settings.  I am not real familiar with these yet.
-(ido-mode 1)
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-create-new-buffer 'always)
+  (ido-mode 1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (setq ido-create-new-buffer 'always)
 
-;; This one might not be fun.  If point is on something that looks
-;; like a filename, ido assumes that is what you want.
-(setq ido-use-filename-at-point 'guess)
+  ;; This one might not be fun.  If point is on something that looks
+  ;; like a filename, ido assumes that is what you want.
+  (setq ido-use-filename-at-point 'guess)
 
-;; Avoid pinging with C-x f
-(setq ffap-machine-p-known 'reject)
+  ;; Avoid pinging with C-x f
+  (setq ffap-machine-p-known 'reject)
 
-;; (setq ido-use-url-at-point t)
-;; this can give preferences to more common files.
-;; (setq ido-file-extensions-order '(".py" ".cc"))
-;; look for docs in ido-find-file, ido-find-dir, etc
+  ;; (setq ido-use-url-at-point t)
+  ;; this can give preferences to more common files.
+  ;; (setq ido-file-extensions-order '(".py" ".cc"))
+  ;; look for docs in ido-find-file, ido-find-dir, etc
+  )
 
 ;;;; magit
 (after "magit-autoloads"
@@ -433,6 +440,22 @@ Will work on both org-mode and any mode that accepts plain html."
 
 (after "lacarte-autloads"
   (global-set-key [?\M-`] 'lacarte-execute-command))
+
+(setq use-package-verbose t)
+
+(use-package helm
+  :config
+  (require 'helm-config)
+  (helm-mode 1)
+  (global-set-key (kbd "M-x") 'undefined)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (message "used helm"))
+
+
+
+
 
 ;;;; winner
 (winner-mode t)
