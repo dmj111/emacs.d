@@ -131,6 +131,7 @@
     zenburn-theme
     dash
     undo-tree
+    use-package
     yasnippet))
 
 (defun load-my-packages ()
@@ -142,7 +143,7 @@
                 (package-install package)))
           my-packages)))
 
-;; (load-my-packages)
+(load-my-packages)
 
 ;;;; Theme
 
