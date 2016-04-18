@@ -444,6 +444,9 @@ Will work on both org-mode and any mode that accepts plain html."
 
 (setq use-package-verbose t)
 
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+
 (use-package helm
   :config
   (require 'helm-config)
@@ -454,7 +457,10 @@ Will work on both org-mode and any mode that accepts plain html."
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (message "used helm"))
 
-
+(use-package avy
+  :ensure t
+  :bind (("M-s" . avy-goto-word-1)
+         ("C-:" . avy-goto-char)))
 
 
 
