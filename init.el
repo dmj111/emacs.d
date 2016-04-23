@@ -144,6 +144,9 @@
           my-packages)))
 
 (load-my-packages)
+(setq use-package-verbose t)
+(use-package dash
+  :ensure t)
 
 ;;;; Theme
 
@@ -239,6 +242,7 @@
   )
 
 ;;;; magit
+
 (after "magit-autoloads"
   (global-set-key "\C-xg" 'magit-status)
 
@@ -261,8 +265,8 @@
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
 ;;;; python
-
-(after 'python
+(use-package python
+  :config
   (defun my-python-mode-hook ()
     "Stuff to run when python-mode loads"
     (setq-default py-indent-offset 4)
@@ -274,15 +278,15 @@
 
   (add-hook 'python-mode-hook 'my-python-mode-hook)
 
-  (after "flymake-python-pyflakes-autoloads"
+  (use-package flymake-python-pyflakes-autoloads
+    :config
     (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
 
-  ;; Alternate setup with jedi...
-  (after "jedi-autoloads"
+  (use-package jedi-autoloads
+    :config
     (add-hook 'python-mode-hook 'jedi:setup)
     (setq jedi:setup-keys t)
     (setq jedi:complete-on-dot t)))
-
 
 ;;;; Shell-script mode
 
@@ -305,7 +309,6 @@
 (recentf-mode 1)
 
 ;; (move to another file to setup an autoload?)
-(require 'dash)
 (defun recentf-ido-find-file ()
   "Find recent file with ido."
   (interactive)
@@ -329,8 +332,9 @@
                                'whitespace-cleanup nil t)))
 
 ;;;; uniquify
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
+(use-package uniquify
+  :config
+  (setq uniquify-buffer-name-style 'forward))
 
 ;;;; undo-tree
 (after "undo-tree-autoloads"
@@ -442,7 +446,7 @@ Will work on both org-mode and any mode that accepts plain html."
 (after "lacarte-autloads"
   (global-set-key [?\M-`] 'lacarte-execute-command))
 
-(setq use-package-verbose t)
+
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
