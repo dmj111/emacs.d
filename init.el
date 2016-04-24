@@ -242,9 +242,11 @@
   )
 
 ;;;; magit
-
-(after "magit-autoloads"
-  (global-set-key "\C-xg" 'magit-status)
+(use-package magit
+  :bind (("\C-xg" . magit-status)
+         :map magit-status-mode-map
+         ("q" . magit-quit-session))
+  :config
 
   ;; full-scrreen magit-status
   ;; from magnars --
@@ -260,9 +262,6 @@
     (interactive)
     (kill-buffer)
     (jump-to-register :magit-fullscreen)))
-
-(after 'magit
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
 ;;;; python
 (use-package python
@@ -337,28 +336,32 @@
   (setq uniquify-buffer-name-style 'forward))
 
 ;;;; undo-tree
-(after "undo-tree-autoloads"
+(use-package undo-tree
+  :config
   (global-undo-tree-mode t)
   (setq undo-tree-visualizer-relative-timestamps t)
-  (setq undo-tree-visualizer--timestamps t)
-  (message "foo"))
+  (setq undo-tree-visualizer--timestamps t))
+
+
 
 ;;;; smex
-(after "smex-autoloads"
-  ;; TODO: set save file
-  (smex-initialize)
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+(use-package smex
+  :bind (("M-x" . smex)
+         ("M-X" . smex-major-mode-commands))
+  :config
+  (smex-initialize))
+
 
 
 ;;;; js2
-(after "js2-mode-autoloads"
-  (add-to-list 'auto-mode-alist '("\\.json" . js-mode))
+(use-package js2-mode
+  :mode ("\\.json" . js-mode)
+  :config
   (add-hook 'js-mode-hook 'js2-minor-mode)
-  (setq js2-highlight-level 3))
+  (setq js2-highlight-level 3)
 
-(after 'js2-mode
-  (after "ac-js2-autoloads"
+  (use-package ac-js2
+    :config
     (add-hook 'js2-mode-hook 'ac-js2-mode)))
 
 
@@ -373,6 +376,7 @@
   (ac-set-trigger-key "<tab>"))
 
 ;;;; yasnippet
+
 (after 'yasnippet
   (yas-global-mode -1)
   (add-hook 'prog-mode-hook 'yas-minor-mode)
