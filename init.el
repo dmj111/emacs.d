@@ -1,7 +1,5 @@
 ;;; init.el --- Emacs configuration file
 
-;;;; TODO: try use-package for the configuration
-
 ;;; Commentary:
 
 ;; stuff to practice:
@@ -12,7 +10,7 @@
 ;; C-M-s regexp forward search
 ;; M-m -- move back to indentation
 ;; C-u M-g M-g -- goto line in prev buffer (matches line number at point)
-;;
+;; ace-jump
 
 ;;;; TO LEARN
 ;; TODO: ace-jump
@@ -27,7 +25,7 @@
 ;; -
 ;; TODO
 ;; - js2 setup
-;; - ace-jump/ace-window from irreal
+;; -  http://emacs.stackexchange.com/questions/2867/how-should-i-change-my-workflow-when-moving-from-ido-to-helm
 
 ;;; Code:
 
@@ -39,14 +37,20 @@
 ;; Don't limit the print out of a variable
 (setq eval-expression-print-length nil)
 
+;; After init.el is loaded, set the theme.
+(eval-after-load 'init
+  (progn
+    (message "loading the theme...")
+    (load-theme my-default-theme t)))
+
+(setq inhibit-startup-screen t)
+
 ;; Turn off mouse interface early in startup to avoid momentary display
 ;; The macro is for non-windowed emacs.
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-
-(setq inhibit-startup-screen t)
 
 ;; make yes/no shorter, and a frequent alias.
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -62,23 +66,23 @@
 ;; doesn't mess with this file.
 (setq custom-file (expand-file-name "custom.el" *local-dir*))
 
-
 (defconst *is-mac* (eq system-type 'darwin))
 
 ;; Add a local lisp directory to the load path.
 (add-to-list 'load-path *local-dir*)
 
+;; Delete soon
 ;; Taken from http://milkbox.net/note/single-file-master-emacs-configuration/
-
+;;
 ;; Make eval-after-load a little nicer.  For elpa autoloads, call it
 ;; with a string name.  For require's, call it with a symbol.
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,mode
-     '(progn
-        (message "after loading %s" ,mode)
-        ,@body)))
+;; (defmacro after (mode &rest body)
+;;   "`eval-after-load' MODE evaluate BODY."
+;;   (declare (indent defun))
+;;   `(eval-after-load ,mode
+;;      '(progn
+;;         (message "after loading %s" ,mode)
+;;         ,@body)))
 
 ;; Try to load local settings ahead of time
 (require 'init-local-preload nil t)
@@ -105,9 +109,9 @@
 (global-set-key (quote [M-down])  'scroll-up-line)
 (global-set-key (quote [M-up])  'scroll-down-line)
 
-;;;; package system.
+;;;; package stuff..
 (require 'cl)
-(require 'package)
+
 
 ;; Also use Melpa for most packages
 (add-to-list 'package-archives
@@ -115,48 +119,28 @@
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
 
-;; Stable packages?
-;; (add-to-list 'package-archives
-;;  '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
+;; make sure use-package is loaded
+(require 'package)
 (package-initialize)
-
-;; Install some packages I use...
-(defvar my-packages
-  '(auto-complete
-    smex
-    magit
-    markdown-mode
-    paredit
-    zenburn-theme
-    dash
-    undo-tree
-    use-package
-    yasnippet))
-
-(defun load-my-packages ()
-  (unless (every #'package-installed-p my-packages)
-    (package-refresh-contents)
-    (mapc #'(lambda (package)
-              (message "checking package")
-              (unless (package-installed-p package)
-                (package-install package)))
-          my-packages)))
-
-(load-my-packages)
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 (setq use-package-verbose t)
+
 (use-package dash
   :ensure t)
+
+
+(use-package dash :ensure t)
+(use-package markdown-mode :ensure t)
+(use-package paredit :ensure t)
+(use-package zenburn-theme :ensure t)
 
 ;;;; Theme
 
 (defvar my-default-theme 'zenburn
   "default theme to use at startup")
 
-;; After init.el is loaded, set the theme.
-(after 'init
-  (message "loading the theme...")
-  (load-theme my-default-theme t))
+
 
 ;;;; Keybindings
 (global-set-key [(f5)] 'call-last-kbd-macro)
@@ -243,6 +227,7 @@
 
 ;;;; magit
 (use-package magit
+  ;; :ensure t
   :bind (("\C-xg" . magit-status)
          :map magit-status-mode-map
          ("q" . magit-quit-session))
@@ -337,6 +322,7 @@
 
 ;;;; undo-tree
 (use-package undo-tree
+  :ensure t
   :config
   (global-undo-tree-mode t)
   (setq undo-tree-visualizer-relative-timestamps t)
@@ -364,9 +350,10 @@
     :config
     (add-hook 'js2-mode-hook 'ac-js2-mode)))
 
-
 ;;;; auto-complete
-(after "auto-complete-autoloads"
+(use-package auto-complete
+  :ensure t
+  :config
   (require 'auto-complete-config)
   (add-to-list 'ac-dictionary-directories
                (expand-file-name "ac-dict" *config-dir*))
@@ -376,8 +363,9 @@
   (ac-set-trigger-key "<tab>"))
 
 ;;;; yasnippet
-
-(after 'yasnippet
+(use-package yasnippet
+  :ensure t
+  :config
   (yas-global-mode -1)
   (add-hook 'prog-mode-hook 'yas-minor-mode)
   (let ((local (expand-file-name "snippets" *local-dir*)))
@@ -390,16 +378,23 @@
           yas-completing-prompt
           yas-no-prompt)))
 
+
 ;;;; c++
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+(use-package c++-mode
+  :mode "\\.h\\'")
+
 
 ;;;; cpputils-cmake
-(after "cpputils-cmake-autoloads")
+(use-package cpputils-cmake)
 
-(after "google-c-style-autoloads"
+(use-package google-c-style
+  :config
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
-(after 'org
+(use-package org
+  :config
+  (message "first use-package-org")
   (add-hook 'org-mode-hook (lambda ()
                              (auto-fill-mode 1)))
 
@@ -421,34 +416,34 @@ Will work on both org-mode and any mode that accepts plain html."
         (insert (format tag ""))
         (forward-char (if is-org-mode -8 -6))))))
 
-(after "org-plus-contrib-autoloads"
-  (autoload 'org-drill "org-drill" "run org drill" t))
+(use-package org-plus-contrib-autoloads
+  :commands org-drill)
 
-(after 'org-drill
+(use-package org-drill
+  :config
   (setq org-drill-add-random-noise-to-intervals-p t))
 
-(after "flycheck-autoloads"
+(use-package flycheck
+  :config
   (add-hook 'js-mode-hook
           (lambda () (flycheck-mode t))))
 
 
-(after "ace-window-autoloads"
-  ;; prefix arg swaps
-  ;; double prefix deletes
-  (global-set-key [(f12)] 'ace-window))
+(use-package ace-window
+  :bind ([(f12)] . ace-window))
 
-(after "ace-jump-mode-autoloads"
-       (add-hook 'ace-jump-mode-before-jump-hook
-                (lambda () (push-makr (point) t))))
+
+(use-package ace-jump-mode
+  :config
+  (add-hook 'ace-jump-mode-before-jump-hook
+            (lambda () (push-mark (point) t))))
 
 ;; http://irreal.org/blog/?p=760
-(after "ace-jump-mode-autoloads"
-  (require 'ace-jump-mode)
-  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
+(use-package ace-jump-mode
+  :bind ("C-c SPC" . ace-jump-mode))
 
-
-(after "lacarte-autloads"
-  (global-set-key [?\M-`] 'lacarte-execute-command))
+(use-package lacarte
+  :bind ([?\M-`] . lacarte-execute-command))
 
 
 
