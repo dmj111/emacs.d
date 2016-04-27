@@ -37,12 +37,6 @@
 ;; Don't limit the print out of a variable
 (setq eval-expression-print-length nil)
 
-;; After init.el is loaded, set the theme.
-(eval-after-load 'init
-  (progn
-    (message "loading the theme...")
-    (load-theme my-default-theme t)))
-
 (setq inhibit-startup-screen t)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
@@ -113,6 +107,9 @@
 (require 'cl)
 
 
+(require 'package)
+(package-initialize)
+
 ;; Also use Melpa for most packages
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
@@ -120,11 +117,21 @@
              '("org" . "http://orgmode.org/elpa/") t)
 
 ;; make sure use-package is loaded
-(require 'package)
-(package-initialize)
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 (setq use-package-verbose t)
+
+
+(use-package zenburn-theme :ensure t)
+(defvar my-default-theme 'zenburn
+  "default theme to use at startup")
+
+;; After init.el is loaded, set the theme.
+(eval-after-load 'init
+  (progn
+    (message "loading the theme...")
+    (load-theme my-default-theme t)))
+
 
 (use-package dash
   :ensure t)
@@ -133,12 +140,10 @@
 (use-package dash :ensure t)
 (use-package markdown-mode :ensure t)
 (use-package paredit :ensure t)
-(use-package zenburn-theme :ensure t)
+
 
 ;;;; Theme
 
-(defvar my-default-theme 'zenburn
-  "default theme to use at startup")
 
 
 
@@ -450,15 +455,41 @@ Will work on both org-mode and any mode that accepts plain html."
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 
+  (use-package helm
+    :config
+    (require 'helm-config)
+    (helm-mode 1)
+    (global-set-key (kbd "M-x") 'undefined)
+    (global-set-key (kbd "M-x") 'helm-M-x)
+    (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+    (global-set-key (kbd "C-x C-f") 'helm-find-files)
+    (message "used helm"))
+
+(when nil
 (use-package helm
   :config
   (require 'helm-config)
-  (helm-mode 1)
-  (global-set-key (kbd "M-x") 'undefined)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (message "used helm"))
+  ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+  ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+  ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+
+  (global-set-key (kbd "C-c h") 'helm-command-prefix)
+  (global-unset-key (kbd "C-x c"))
+
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+  (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
+
+  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-file-name-history-use-recentf t)
+
+  (helm-mode 1)))
 
 (use-package avy
   :ensure t
