@@ -130,6 +130,8 @@
 (eval-after-load 'init
   (progn
     (message "loading the theme...")
+    ;; To change, make sure the package is loaded, and then set
+    ;; my-default-theme.
     (load-theme my-default-theme t)))
 
 
