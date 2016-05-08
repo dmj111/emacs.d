@@ -128,11 +128,11 @@
 
 ;; After init.el is loaded, set the theme.
 (eval-after-load 'init
-  (progn
-    (message "loading the theme...")
-    ;; To change, make sure the package is loaded, and then set
-    ;; my-default-theme.
-    (load-theme my-default-theme t)))
+  '(progn
+     (message "loading the theme...")
+     ;; To change, make sure the package is loaded, and then set
+     ;; my-default-theme.
+     (load-theme my-default-theme t)))
 
 
 (use-package dash
@@ -318,9 +318,11 @@
 ;;;; programming mode
 ;; TODO: flyspell on mac!!
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-(add-hook 'prog-mode-hook
-          (lambda () (add-hook 'before-save-hook
-                               'whitespace-cleanup nil t)))
+
+;; Used this at previous job - not sure if still want it.
+;; (add-hook 'prog-mode-hook
+;;           (lambda () (add-hook 'before-save-hook
+;;                                'whitespace-cleanup nil t)))
 
 ;;;; uniquify
 (use-package uniquify
