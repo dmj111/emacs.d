@@ -350,7 +350,9 @@
 
 ;;;; js2
 (use-package js2-mode
-  :mode ("\\.json" . js-mode)
+  :mode (("\\.json\\'" . js-mode)
+         ("\\.js\\'" . js2-mode))
+  
   :config
   (add-hook 'js-mode-hook 'js2-minor-mode)
   (setq js2-highlight-level 3)
@@ -377,7 +379,11 @@
   :config
   (yas-global-mode -1)
   (add-hook 'prog-mode-hook 'yas-minor-mode)
+  (add-hook 'snippet-mode-hook 'yas-minor-mode)  
   (let ((local (expand-file-name "snippets" *local-dir*)))
+    (when (file-exists-p local)
+      (add-to-list 'yas-snippet-dirs local)))
+  (let ((local (expand-file-name "snippets" *config-dir*)))
     (when (file-exists-p local)
       (add-to-list 'yas-snippet-dirs local)))
   (setq yas-prompt-functions
