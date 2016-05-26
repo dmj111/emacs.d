@@ -8,3 +8,5 @@
 /.org-id-locations
 /smex-items
 /url/
+.yas-compiled-snippets.el
+/history
