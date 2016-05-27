@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: newfile
+# key: newfile
+# binding: direct-keybinding
+# --
+#+TITLE: $1
