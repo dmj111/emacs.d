@@ -109,3 +109,20 @@ b - switch to buffer
 
 
 M-m move to first non-whitespace char in line !!  (pure gold dust)
+
+syntax table is where word, comment, etc. are defined.
+C-h s
+
+subword-mode - treats CamelCase as separate
+superword-mode - treats snake_case as one word. 
+
+C-M-f forward sexp, -b backward
+
+C-M-d, u : down into list, up out of list
+C-M-k kill sexp in front of point 
+C-M-n, p move amongst balanced expressions at the same level
+
+M-{} forward/backward paragraph
+M-a/e sentence
+
+C-M-a/e - begin/end function
