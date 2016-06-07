@@ -41,3 +41,71 @@
 * References
   - [[https://github.com/bbatsov/prelude][Emacs Prelude]]
   - [[https://github.com/purcell/emacs.d][Steve Purcell's startup]]
+
+* Notes
+
+
+Universal arg: C-u is shorthand for 4.
+C-u C-u is 4 times 4
+
+C-0 to 9, and M-0 to 9 are bound to those numbers
+
+C--, M--, C-M-- are negative, and can reverse the direction of a
+command.
+
+
+M-x eval-buffer, eval-region
+C-M-x - eval-defun
+
+C-h i to run info
+
+- [, ] to go back/forward
+
+ESC ESC ESC - close prompts, everything, goes back to one window.
+
+C-/ - undo
+
+#+BEGIN_EXAMPLE
+
+  file local header:
+     -*- mode: mode-name-here; my-variable: value -*-
+
+  footer:
+  Local Variables:
+  mode: mode-name-here
+  my-variable: value
+  End:
+#+END_EXAMPLE
+
+- auto-mode-alist
+- magic-mode-alist
+
+
+- C-h C <RET> -- see current encoding system
+- 
+
+
+
+C-x 0 delete active window
+C-x 1 delete other windows
+
+
+Looks useful for S-left/right, etc:
+(windmove-default-keybindings)
+
+Other window commands:
+C-x 4
+- C-f (open file)
+- d dired
+- C-o displays buffer
+- switches to buffer and window
+- kills buffer and window
+
+C-x 5: frame commands
+2 - create new fream
+b - switch to buffer
+0 - delete active
+1 - dlete other
+
+
+M-m move to first non-whitespace char in line !!  (pure gold dust)

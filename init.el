@@ -111,10 +111,14 @@
 (package-initialize)
 
 ;; Also use Melpa for most packages
+
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
 
 ;; make sure use-package is loaded
 (unless (package-installed-p 'use-package)
@@ -541,6 +545,8 @@ file of a buffer in an external program."
 (unless (server-running-p)
   (server-start))
 
+
+(setq apropos-sort-by-scores t)
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
@@ -557,3 +563,5 @@ file of a buffer in an external program."
 ;;; init.el ends here
 
 ;;https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
+
+
