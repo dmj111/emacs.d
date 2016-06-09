@@ -126,3 +126,26 @@ M-{} forward/backward paragraph
 M-a/e sentence
 
 C-M-a/e - begin/end function
+
+C-x <> scroll left/right
+
+Bookmarks C-x r (m/l/b)
+
+Registers: C-x r (Number Sregion, SPCpoint, Jump, Insert, Window)
+
+C-u C-spc pop the mark
+
+S-left/right - shift selection
+
+C-x C-x exchange point and mark.
+
+C-x h mark buffer
+C-M-h mark next defun
+C-M-@ (or SPC) mark next s-exp.
+
+Isearch 
+C-M-s incremental regep
+C-M-r incremental regep
+RET pick selection
+
+Use ISearch as default browsing.
