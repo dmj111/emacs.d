@@ -149,3 +149,89 @@ C-M-r incremental regep
 RET pick selection
 
 Use ISearch as default browsing.
+
+ISearch history: M-n, M-p, C-M-i (tab complete isearch history)
+
+C-w add word at point, C-M-y add char at point, M-s C-e add rest of
+line, C-y yank to search string.
+
+M-s c toggle case, M-s r toggle regex M-s w toggle word mode (treat
+delims the same?), M-s _ symbole mode, M-s <spc> lax whitespace
+
+M-s w isearch forward word.
+M-s _ isearch forward symbol
+M-s . isearch forward symbol
+
+(except I have avy bound at M-s)
+
+** occur
+M-s o occur, or activate occur on current isearch
+M-n,p walk through results
+q quits, e edit
+
+M-g C-n, C-p next / prev error (also in compile, grep)
+
+M-x imenu (bind to M-i?)
+
+** apropos
+
+apropos-command, -variable
+
+** helm
+RET primary act
+C-e secondary, C-j tertiary
+TAB - action selector
+C-n,p
+M-<>
+
+Helm key map
+b resume last helm command
+/ run find
+a apropos
+m man
+i imenu / semantc
+r interactive regex
+h r searchicfo
+M-x  M-s
+C-c g google suggest matches
+
+** ido
+   
+   ido better for buffer / file match (knowing what you want to
+   select)
+
+(ido-mode 1)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
+
+C-s/r move up/down
+TAB - regular
+// root
+~/ home
+Back - delete or go up
+
+https://www.masteringemacs.org/article/introduction-to-ido-mode
+
+
+- [ ] gnu core utils
+
+** grep
+
+grep 
+grep-find 
+lgrep 
+rgrep
+rzgrep
+
+** win32 note
+
+  to get gnu/cygwin find
+  
+(setenv "PATH" (concat "C:\\gnuwin32\\bin\\"
+                             path-separator
+                             (getenv "PATH")))
+
+** movement
+   C-M-l reposition function so it is in view
+   M-g M-g go to line
+   M-g TAB to to column

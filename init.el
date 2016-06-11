@@ -548,6 +548,8 @@ file of a buffer in an external program."
 
 (setq apropos-sort-by-scores t)
 ;; Load the local file, if it exists.
+
+(global-set-key (kbd "M-i") 'imenu)
 (require 'init-local nil t)
 
 (provide 'init)
