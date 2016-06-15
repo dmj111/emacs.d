@@ -10,3 +10,8 @@
 /url/
 .yas-compiled-snippets.el
 /history
+/projectile-bookmarks.eld
+/bookmarks
+/projectile.cache
+/server
+
