@@ -208,15 +208,11 @@
 (when *is-mac*
   (setq mac-command-modifier 'meta))
 
-(when nil
-;;;; ido
-  ;; Its built-in...
-  (require 'ido)
-
+(use-package ido
   ;; Consider the settings that prelude uses.
   ;; -- look at ido-ubiquitous
   ;; -- flx-ido
-
+  :config 
 ;;;; Ido settings.  I am not real familiar with these yet.
   (ido-mode 1)
   (setq ido-enable-flex-matching t)
@@ -476,7 +472,7 @@ Will work on both org-mode and any mode that accepts plain html."
     (global-set-key (kbd "M-x") 'undefined)
     (global-set-key (kbd "M-x") 'helm-M-x)
     (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
-    (global-set-key (kbd "C-x C-f") 'helm-find-files)
+    ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
     (message "used helm"))
 
 (when nil

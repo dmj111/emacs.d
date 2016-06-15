@@ -235,3 +235,82 @@ rzgrep
    C-M-l reposition function so it is in view
    M-g M-g go to line
    M-g TAB to to column
+
+** killing
+   C-M-k kill s-expression
+   C-S-delete kill current line
+   M-k kill sentence
+
+   C-M-k append kill
+
+   killing new text moves you back to the top of the kill ring (if you
+   weren't there to start with )
+
+** transposing   
+   C-t chars
+   M-t words-- word aware in programming modes !!
+   C-M-t sexp
+   C-x C-t lines
+   transpose-paragraphs
+   transpose-sentences
+   
+   tranposes before and after point
+
+** filling
+
+   M-q fill, with C-u - justfiedes
+   C-x f set fill column
+   C-x . set the fill prefix
+
+
+   C-M-j, M-j in a comment, newline, and start a new comment
+
+   comment-* variables
+
+** replace
+   query-regexp-replace
+   replace-string
+   replace-regexp
+
+   Inside isearch:
+   C-M-% qrr
+   M-% query replace
+
+   Query choices:
+   y, spc - replace
+   . replace, then quit
+   RET, q - exit
+   ^ move back to prev match
+
+** regex
+   stuff that needs escapes, unlike most regexes
+   
+   \|
+   \(, \)
+   \{, \}
+
+   no \d.  must use 0-9 or [:digit:]
+
+   \<, \> beg, end of word
+   \_<, \>_  symbol
+
+   \scode - syntax match of code
+   \Scode - not code
+
+   \s- (whitespace)
+   \sw word constituent
+   \s( \s) open, close
+   \s" string delimeters
+   \s< open comment , > close coment
+
+
+   C-u C-x = (what-cursor-position) - display unicode info
+
+   \1...\9 inserts text from match
+   \#1 ... insert text as integer
+   \? prompt user
+   \# increment number
+   \& whole match string
+   \,(elisp-form \2) - only 
+   
+
