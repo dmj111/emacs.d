@@ -164,8 +164,8 @@
 (global-set-key [(f9)] 'recompile)
 
 ;; Hmm... isearch.  and regexp.
-(global-set-key "\M-s" 'isearch-forward-regexp)
-(global-set-key "\M-r" 'isearch-backward-regexp)
+;; (global-set-key "\M-s" 'isearch-forward-regexp)
+;; (global-set-key "\M-r" 'isearch-backward-regexp)
 
 ;; backward-kill-word is a fast way to delete
 (global-set-key "\C-w"     'backward-kill-word)
@@ -178,7 +178,9 @@
 ;;;; Hippie-expand
 ;; From emacs-prelude
 ;; hippie expand is dabbrev expand on steroids
-(global-set-key (kbd "M-/") 'hippie-expand)
+
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
+
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
                                          try-expand-dabbrev-from-kill
@@ -195,7 +197,9 @@
 (global-set-key "\C-xm" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
 
+;; TODO - detect electric indent, and don't bother if it exists
 (define-key global-map (kbd "RET") 'newline-and-indent)
+
 
 ;; backward-kill-word is a fast way to delete
 (global-set-key "\C-w"     'backward-kill-word)
@@ -466,16 +470,38 @@ Will work on both org-mode and any mode that accepts plain html."
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+;; (use-package swiper
+;;   :bind (("C-s" . swiper)
+;;          ("M-x" . counsel-M-x)
+;;          ("C-x C-f" . counsel-find-file)
+;;          ("<f1> f" . counsel-describe-function)
+;;          ("<f1> v" . counsel-describe-variable)
+;;          ("<f1> l" . counsel-load-library)
+;;          ("<f2> i" . counsel-info-lookup-symbol)
+;;          ("<f2> u" . counsel-unicode-char)
+;;          ("C-c g" . counsel-git)
+;;          ("C-c j" . counsel-git-grep)
+;;          ("C-c k" . counsel-ag)
+;;          ("C-x l" . counsel-locate)
+;;          ("C-S-o" . counsel-rhythmbox))
+;;   :config
+;;   (setq ivy-use-virtual-buffers t)
+;;   (setq ivy-height 10)
+;;   (setq ivy-count-format "(%d/%d) "))
 
-(use-package helm
-  :config
-  (require 'helm-config)
-  (helm-mode 1)
-  (global-set-key (kbd "M-x") 'undefined)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
-  ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (message "used helm"))
+
+(when nil
+  (use-package helm
+    :config
+    (require 'helm-config)
+    (helm-mode 1)
+    ("M-x" . 'undefined)
+    (global-set-key (kbd "M-x") 'helm-M-x)
+    (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+    ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+    (message "used helm")))
+
+  
 
 (when nil
   (use-package helm
@@ -505,7 +531,7 @@ Will work on both org-mode and any mode that accepts plain html."
 
 (use-package avy
   :ensure t
-  :bind (("M-s" . avy-goto-word-1)
+  :bind (;; ("M-s" . avy-goto-word-1)
          ("C-:" . avy-goto-char)))
 
 
