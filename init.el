@@ -217,11 +217,13 @@
   ;; -- look at ido-ubiquitous
   ;; -- flx-ido
   :config 
-;;;; Ido settings.  I am not real familiar with these yet.
-  (ido-mode 1)
+  ;; https://www.masteringemacs.org/article/introduction-to-ido-mode
+  ;; Ido settings.  I am not real familiar with these yet.
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
   (setq ido-create-new-buffer 'always)
+  (ido-mode 1)
+
 
   ;; This one might not be fun.  If point is on something that looks
   ;; like a filename, ido assumes that is what you want.
@@ -297,22 +299,24 @@
 (add-hook 'emacs-lisp-mode-hook 'imenu-elisp-sections)
 
 
+(use-package recentf
 ;;;; recentf
+  :bind
+  (("C-x C-r" . recentf-ido-find-file))
+  :config
+  (setq recentf-max-saved-items 200
+        recentf-max-menu-items 15)
+  (recentf-mode 1)
+  ;; (move to another file to setup an autoload?)
+  (defun recentf-ido-find-file ()
+    "Find recent file with ido."
+    (interactive)
+    (let ((file (ido-completing-read
+                 "Chose recent file:"
+                 (-map 'abbreviate-file-name recentf-list) nil t)))
+      (when file (find-file file)))))
 
-(setq recentf-max-saved-items 200
-      recentf-max-menu-items 15)
-(recentf-mode 1)
 
-;; (move to another file to setup an autoload?)
-(defun recentf-ido-find-file ()
-  "Find recent file with ido."
-  (interactive)
-  (let ((file (ido-completing-read
-               "Chose recent file:"
-               (-map 'abbreviate-file-name recentf-list) nil t)))
-    (when file (find-file file))))
-
-(global-set-key (kbd "C-c f") 'recentf-ido-find-file)
 
 
 ;;; Custom file
