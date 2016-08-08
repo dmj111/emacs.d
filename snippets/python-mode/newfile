@@ -1,0 +1,23 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: newfile
+# key: newfile
+# binding: direct-keybinding
+# expand-env: ((yas-indent-line 'fixed)) 
+# --
+import argparse
+import sys
+
+def ${2:fcn_name}(filename):
+    ${0}
+
+def main(argv):
+    parser = argparse.ArgumentParser(description="${1:description}")
+    parser.add_argument("filename", help="file to process")
+    args = parser.parse_args(argv)
+
+    $2(args.filename)
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
+    
