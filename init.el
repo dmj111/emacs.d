@@ -439,7 +439,40 @@ Will work on both org-mode and any mode that accepts plain html."
           (insert
            (format tag (help-key-description key nil)))
         (insert (format tag ""))
-        (forward-char (if is-org-mode -8 -6))))))
+        (forward-char (if is-org-mode -8 -6)))))
+
+  (setq org-export-htmlize-output-type 'css)
+  (setq org-src-fontify-natively t)
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (setq org-directory "~/repos/private/notes")
+  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (setq org-log-done t)
+
+  (setq org-default-notes-file "log.org")
+  (define-key global-map "\C-cc" 'org-capture)
+
+  (setq org-capture-templates
+        '(("r" "Reference" entry (file "reference.org")
+           "* %? %^g" :prepend t)
+          ;; ("t" "Todo Inbox" entry (file+headline "" "Todos")
+          ;;  "* TODO %?\n  Added %u\n  %i" :prepend t)
+          ("b" "Bookmark" entry (file "bookmarks.org")
+           "* %?\n %I")
+          ;; http://members.optusnet.com.au/~charles57/GTD/datetree.html
+          ("n" "Notes" entry (file+datetree "log.org")
+           "* %^{Description} %^g %?
+Added: %U")
+          ("t" "make a task" entry (file+datetree "log.org")
+           "* TODO %^{Description} %^g
+ %?
+Added: %U")))
+
+  ;; http://doc.norang.ca/org-mode.html#Refiling
+  (setq org-refile-use-outline-path t)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-targets (quote ((nil :level . 2))))
+)
 
 (use-package org-plus-contrib-autoloads
   :commands org-drill)
