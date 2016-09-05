@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: class-order
+# key: class-order
+# desc: insert the declaration order for c++ classes.  This is expected in
+#       public, protected, and private data.
+# --
+// Using-declarations, Typedefs and Enums
+// Constants (static const data members)
+// Constructors and assignment operators
+// Destructor
+// Methods, including static methods
+// Data Members (except static const data members)

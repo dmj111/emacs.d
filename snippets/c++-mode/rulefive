@@ -1,0 +1,18 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: rule-of-five
+# key: rule-of-five
+# binding: direct-keybinding
+# --
+class ${1:Name} {
+public:
+        $1() = default;
+        $1(const $1 &other) = default;
+        $1& operator=(const $1 &other) = default;
+
+        $1($1 &&other) noexcept = default;
+        $1& operator=($1 &&other) noexcept = default;
+
+        virtual ~$1() noexcept = default;
+private:
+
+};
