@@ -520,6 +520,7 @@ Added: %U")))
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+(use-package counsel :ensure t)
 (use-package swiper
   :ensure t
   ;; C-j to select current
