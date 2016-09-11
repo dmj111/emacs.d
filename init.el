@@ -309,7 +309,7 @@
 
 
 (use-package recentf
-;;;; recentf
+  :ensure t
   :bind
   (("C-x C-r" . recentf-ido-find-file))
   :config
@@ -342,9 +342,10 @@
 ;;                                'whitespace-cleanup nil t)))
 
 ;;;; uniquify
-(use-package uniquify
-  :config
-  (setq uniquify-buffer-name-style 'forward))
+
+;; (use-package uniquify
+;;   :config
+(setq uniquify-buffer-name-style 'forward)
 
 ;;;; undo-tree
 (use-package undo-tree
@@ -368,9 +369,9 @@
 
 ;;;; js2
 (use-package js2-mode
+  :ensure t
   :mode (("\\.json\\'" . js-mode)
          ("\\.js\\'" . js2-mode))
-  
   :config
   (add-hook 'js-mode-hook 'js2-minor-mode)
   (setq js2-highlight-level 3)
@@ -422,6 +423,7 @@
 (use-package cpputils-cmake)
 
 (use-package google-c-style
+  :ensure t
   :config
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
@@ -543,44 +545,44 @@ Added: %U")))
   (setq ivy-count-format "(%d/%d) "))
 
 
-(when nil
-  (use-package helm
-    :config
-    (require 'helm-config)
-    (helm-mode 1)
-    ("M-x" . 'undefined)
-    (global-set-key (kbd "M-x") 'helm-M-x)
-    (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
-    ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-    (message "used helm")))
+(use-package helm
+  :disabled t
+  :config
+  (require 'helm-config)
+  (helm-mode 1)
+  ("M-x" . 'undefined)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+  ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (message "used helm"))
 
   
 
-(when nil
-  (use-package helm
-    :config
-    (require 'helm-config)
-    ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-    ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-    ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+(use-package helm
+  :disabled t
+  :config
+  (require 'helm-config)
+  ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+  ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+  ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
 
-    (global-set-key (kbd "C-c h") 'helm-command-prefix)
-    (global-unset-key (kbd "C-x c"))
+  (global-set-key (kbd "C-c h") 'helm-command-prefix)
+  (global-unset-key (kbd "C-x c"))
 
-    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-    (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+  (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
-    (when (executable-find "curl")
-      (setq helm-google-suggest-use-curl-p t))
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
 
-    (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-          helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-          helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-          helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-          helm-ff-file-name-history-use-recentf t)
+  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-file-name-history-use-recentf t)
 
-    (helm-mode 1)))
+  (helm-mode 1))
 
 (use-package avy
   :ensure t
