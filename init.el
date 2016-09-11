@@ -206,6 +206,7 @@
   (setq mac-command-modifier 'meta))
 
 (use-package ido
+  :disabled t
   ;; Consider the settings that prelude uses.
   ;; -- look at ido-ubiquitous
   ;; -- flx-ido
@@ -239,6 +240,9 @@
          ("q" . magit-quit-session))
   :config
 
+  (eval-after-load 'swiper
+    (setq magit-completing-read-function 'ivy-completing-read))
+  
   ;; full-scrreen magit-status
   ;; from magnars --
   ;;    https://github.com/magnars/.emacs.d/blob/master/setup-magit.el
@@ -342,6 +346,7 @@
 
 ;;;; smex
 (use-package smex
+  :disabled t
   :bind (("M-x" . smex)
          ("M-X" . smex-major-mode-commands))
   :config
@@ -500,24 +505,30 @@ Added: %U")))
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-;; (use-package swiper
-;;   :bind (("C-s" . swiper)
-;;          ("M-x" . counsel-M-x)
-;;          ("C-x C-f" . counsel-find-file)
-;;          ("<f1> f" . counsel-describe-function)
-;;          ("<f1> v" . counsel-describe-variable)
-;;          ("<f1> l" . counsel-load-library)
-;;          ("<f2> i" . counsel-info-lookup-symbol)
-;;          ("<f2> u" . counsel-unicode-char)
-;;          ("C-c g" . counsel-git)
-;;          ("C-c j" . counsel-git-grep)
-;;          ("C-c k" . counsel-ag)
-;;          ("C-x l" . counsel-locate)
-;;          ("C-S-o" . counsel-rhythmbox))
-;;   :config
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq ivy-height 10)
-;;   (setq ivy-count-format "(%d/%d) "))
+(use-package swiper
+  ;; C-j to select current
+  ;; C-M-j to select current value (creat new file)
+  :bind (("C-s" . swiper)
+         ("M-x" . counsel-M-x)
+         ("\C-x\C-m" . counsel-M-x)
+         ("\C-xm" . counsel-M-x)
+         ("\C-c\C-m" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("<f1> f" . counsel-describe-function)
+         ("<f1> v" . counsel-describe-variable)
+         ("<f1> l" . counsel-load-library)
+         ("<f2> i" . counsel-info-lookup-symbol)
+         ("<f2> u" . counsel-unicode-char)
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c k" . counsel-ag)
+         ("C-x l" . counsel-locate)
+         ("C-S-o" . counsel-rhythmbox)
+         ("C-c C-r" . ivy-resume))
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-height 10)
+  (setq ivy-count-format "(%d/%d) "))
 
 
 (when nil
