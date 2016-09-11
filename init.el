@@ -258,8 +258,20 @@
     (kill-buffer)
     (jump-to-register :magit-fullscreen)))
 
+(use-package projectile
+  :ensure t
+  :diminish projectile-mode
+  :config
+  (progn
+    (setq projectile-completion-system 'ivy)
+    (setq projectile-indexing-method 'alien)
+    (setq projectile-enable-caching t)
+    (projectile-global-mode t)))
+
+
 ;;;; python
 (use-package python
+  :ensure t
   :config
   (defun my-python-mode-hook ()
     "Stuff to run when python-mode loads"
