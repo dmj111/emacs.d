@@ -520,8 +520,10 @@ Added: %U")))
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 (use-package swiper
+  :ensure t
   ;; C-j to select current
   ;; C-M-j to select current value (creat new file)
+  ;; M-j to select word at point.
   :bind (("C-s" . swiper)
          ("M-x" . counsel-M-x)
          ("\C-x\C-m" . counsel-M-x)
@@ -538,7 +540,8 @@ Added: %U")))
          ("C-c k" . counsel-ag)
          ("C-x l" . counsel-locate)
          ("C-S-o" . counsel-rhythmbox)
-         ("C-c C-r" . ivy-resume))
+         ("C-c C-r" . ivy-resume)
+         ("C-x b" . ivy-switch-buffer))
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-height 10)
