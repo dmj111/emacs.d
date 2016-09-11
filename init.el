@@ -139,18 +139,11 @@
      (load-theme my-default-theme t)))
 
 
-(use-package dash
-  :ensure t)
-
-
 (use-package dash :ensure t)
 (use-package markdown-mode :ensure t)
 (use-package paredit :ensure t)
 
-
 ;;;; Theme
-
-
 
 
 ;;;; Keybindings
