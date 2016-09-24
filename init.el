@@ -156,7 +156,7 @@
 (global-set-key "\M-?" 'help)
 (global-set-key "\C-cx" 'compile)
 (global-set-key [(f9)] 'recompile)
-
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
 ;; Hmm... isearch.  and regexp.
 ;; (global-set-key "\M-s" 'isearch-forward-regexp)
 ;; (global-set-key "\M-r" 'isearch-backward-regexp)
