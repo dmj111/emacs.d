@@ -631,9 +631,28 @@ file of a buffer in an external program."
 
 
 (setq apropos-sort-by-scores t)
-;; Load the local file, if it exists.
+
+
+;; http://stackoverflow.com/questions/20967818/emacs-function-to-case-insensitive-sort-lines
+(defun sort-lines-nocase ()
+  (interactive)
+  (let ((sort-fold-case t))
+    (call-interactively 'sort-lines)))
+
+
+;; http://stackoverflow.com/a/13408008
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+
 
 (global-set-key (kbd "M-i") 'imenu)
+
+;; Load the local file, if it exists.
 (require 'init-local nil t)
 
 (provide 'init)
