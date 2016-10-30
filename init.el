@@ -652,6 +652,9 @@ file of a buffer in an external program."
 
 (global-set-key (kbd "M-i") 'imenu)
 
+;;(set-frame-font "Cousine-14" nil t)
+;;(setq default-frame-alist '((font . "Cousine-14")))
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
