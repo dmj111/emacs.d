@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: cheat-timer
+# key: cheat-timer
+# desc: Insert an example of a timer class
+# --
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+using std::chrono::time_point<high_resolution_clock>;
+
+class Timer {
+ public:
+  void Start() { start_ = high_resolution_clock::now(); }
+  double End() {
+    auto end = high_resolution_clock::now();
+    duration<double> elapsed_seconds = end - start_;
+    return elapsed_seconds.count();
+  }
+
+ private:
+  typedef time_point<high_resolution_clock> timer_t;
+  timer_t start_;
+};
