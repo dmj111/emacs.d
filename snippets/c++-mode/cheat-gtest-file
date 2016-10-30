@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: cheat-gtest-file
+# key: cheat-gtest-file
+# desc: Create an example of a sample gtest-file
+# --
+#include "my_header.h"
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include <gtest/gtest.h>
+
+#include "other_code.h"
+
+namespace {
+
+// Smoke test to make sure that failures are reported.
+TEST(AlwaysFail, Fail) {
+    EXPECT_FALSE(true);
+}
+}  // namespace {
+
+// Remove if building with gtest_main
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
