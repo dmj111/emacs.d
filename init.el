@@ -465,7 +465,7 @@ Will work on both org-mode and any mode that accepts plain html."
   (setq org-default-notes-file "log.org")
   (define-key global-map "\C-cc" 'org-capture)
 
-  (setq org-capture-templates
+  (setq dmj-org-capture-templates
         '(("r" "Reference" entry (file "reference.org")
            "* %? %^g" :prepend t)
           ;; ("t" "Todo Inbox" entry (file+headline "" "Todos")
@@ -481,6 +481,7 @@ Added: %U")
  %?
 Added: %U")))
 
+  (setq org-capture-templates dmj-org-capture-templates)
   ;; http://doc.norang.ca/org-mode.html#Refiling
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
