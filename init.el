@@ -656,6 +656,18 @@ file of a buffer in an external program."
 ;;(set-frame-font "Cousine-14" nil t)
 ;;(setq default-frame-alist '((font . "Cousine-14")))
 
+
+;; http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/
+;; unset C- and M- digit keys
+(dotimes (n 10)
+  (global-unset-key (kbd (format "C-%d" n)))
+  (global-unset-key (kbd (format "M-%d" n))))
+
+(define-prefix-command 'dmj-map)
+(global-set-key (kbd "C-1") 'dmj-map)
+
+(define-key dmj-map (kbd "r") 'recompile)
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
