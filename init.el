@@ -668,6 +668,12 @@ file of a buffer in an external program."
 
 (define-key dmj-map (kbd "r") 'recompile)
 
+(defun dmj-test-foo()
+  "This is a silly test"
+  (interactive)
+  (message "foo"))
+(define-key dmj-map (kbd "[") 'dmj-test-foo)
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
