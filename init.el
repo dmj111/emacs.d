@@ -106,6 +106,24 @@
 ;;;; package stuff..
 (require 'cl)
 
+;; http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/
+;; unset C- and M- digit keys
+(dotimes (n 10)
+  (global-unset-key (kbd (format "C-%d" n)))
+  (global-unset-key (kbd (format "M-%d" n))))
+
+(define-prefix-command 'dmj-map)
+(global-set-key (kbd "C-1") 'dmj-map)
+
+(define-key dmj-map (kbd "r") 'recompile)
+
+(defun dmj-test-foo()
+  "This is a silly test"
+  (interactive)
+  (message "foo"))
+(define-key dmj-map (kbd "[") 'dmj-test-foo)
+
+
 
 (require 'package)
 (package-initialize)
@@ -592,10 +610,9 @@ Added: %U")))
 
 (use-package avy
   :ensure t
-  :bind (;; ("M-s" . avy-goto-word-1)
-         ("C-:" . avy-goto-char)))
-
-
+  :bind (
+         ("C-:" . avy-goto-char)
+         :map dmj-map ("w" . avy-goto-word-1)))
 
 ;;;; winner
 (winner-mode t)
@@ -657,22 +674,13 @@ file of a buffer in an external program."
 ;;(setq default-frame-alist '((font . "Cousine-14")))
 
 
-;; http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/
-;; unset C- and M- digit keys
-(dotimes (n 10)
-  (global-unset-key (kbd (format "C-%d" n)))
-  (global-unset-key (kbd (format "M-%d" n))))
 
-(define-prefix-command 'dmj-map)
-(global-set-key (kbd "C-1") 'dmj-map)
 
-(define-key dmj-map (kbd "r") 'recompile)
-
-(defun dmj-test-foo()
-  "This is a silly test"
-  (interactive)
-  (message "foo"))
-(define-key dmj-map (kbd "[") 'dmj-test-foo)
+(use-package golden-ratio
+  :ensure t
+  :diminish golden-ratio-mode
+  :init
+  (golden-ratio-mode 1))
 
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
