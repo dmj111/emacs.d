@@ -122,6 +122,7 @@
   (interactive)
   (message "foo"))
 (define-key dmj-map (kbd "[") 'dmj-test-foo)
+(define-key dmj-map (kbd "l") 'delete-trailing-whitespace)
 
 
 
@@ -229,7 +230,7 @@
   ;; Consider the settings that prelude uses.
   ;; -- look at ido-ubiquitous
   ;; -- flx-ido
-  :config 
+  :config
   ;; https://www.masteringemacs.org/article/introduction-to-ido-mode
   ;; Ido settings.  I am not real familiar with these yet.
   (setq ido-enable-flex-matching t)
@@ -261,7 +262,7 @@
 
   (eval-after-load 'swiper
     (setq magit-completing-read-function 'ivy-completing-read))
-  
+
   ;; full-scrreen magit-status
   ;; from magnars --
   ;;    https://github.com/magnars/.emacs.d/blob/master/setup-magit.el
@@ -417,7 +418,7 @@
   :config
   (yas-global-mode -1)
   (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook 'snippet-mode-hook 'yas-minor-mode)  
+  (add-hook 'snippet-mode-hook 'yas-minor-mode)
   (let ((local (expand-file-name "snippets" *local-dir*)))
     (when (file-exists-p local)
       (add-to-list 'yas-snippet-dirs local)))
@@ -450,7 +451,7 @@
   :bind (([f6] . org-capture))
   :config
   (message "first use-package-org")
-  
+
   (add-hook 'org-mode-hook (lambda ()
                              (auto-fill-mode 1)))
 
@@ -580,7 +581,7 @@ Added: %U")))
   ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (message "used helm"))
 
-  
+
 
 (use-package helm
   :disabled t
@@ -612,7 +613,9 @@ Added: %U")))
   :ensure t
   :bind (
          ("C-:" . avy-goto-char)
-         :map dmj-map ("w" . avy-goto-word-1)))
+         :map dmj-map
+         ("w" . avy-goto-word-1)
+         ("1" . avy-goto-char-timer)))
 
 ;;;; winner
 (winner-mode t)
@@ -698,5 +701,3 @@ file of a buffer in an external program."
 ;;; init.el ends here
 
 ;;https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
-
-
