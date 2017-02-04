@@ -685,6 +685,16 @@ file of a buffer in an external program."
   :init
   (golden-ratio-mode 1))
 
+;; google-this
+(use-package google-this
+  :config
+  (google-this-mode 1))
+
+(use-package wttrin
+  :commands (wttrin)
+  :init
+  (setq wttrin-default-cities '("State College, Pennsylvania")))
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
