@@ -674,8 +674,19 @@ file of a buffer in an external program."
 (global-set-key (kbd "M-i") 'imenu)
 
 ;;(set-frame-font "Cousine-14" nil t)
-;;(setq default-frame-alist '((font . "Cousine-14")))
 
+
+(unless t
+  (set-frame-font "source-code-pro-12")
+  (set-frame-font "inconsolata-14")
+  (set-frame-font "monaco-12")
+  (set-frame-font "menlo-12")
+  (set-frame-font "-*-Andale Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+  (set-frame-font "Cousine-14")
+  ;; abcdefghijklmnopqrstuvqxyz
+  ;; ABCDEFGHIJKLMNOPQRSTUVQXYZ
+  ;; 0123456789
+)
 
 
 
