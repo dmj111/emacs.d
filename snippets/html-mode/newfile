@@ -5,9 +5,14 @@
 # --
 <html>
   <head>
-    <script src=""></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <div id="main-div">
+        <h1> Heading </h1>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
 
