@@ -677,15 +677,20 @@ file of a buffer in an external program."
 
 
 (unless t
-  (set-frame-font "source-code-pro-12")
   (set-frame-font "inconsolata-14")
   (set-frame-font "monaco-12")
   (set-frame-font "menlo-12")
   (set-frame-font "-*-Andale Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
   (set-frame-font "Cousine-14")
+  (set-frame-font "source code pro-12")
   ;; abcdefghijklmnopqrstuvqxyz
   ;; ABCDEFGHIJKLMNOPQRSTUVQXYZ
   ;; 0123456789
+  ;; O, o, 0
+  ;; 1 I i L l
+  ;; 5 S s
+  ;; 2 Z z
+  ;; ( { [ ] } )
 )
 
 
