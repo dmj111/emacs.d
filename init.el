@@ -142,6 +142,7 @@
 
 ;; make sure use-package is loaded
 (unless (package-installed-p 'use-package)
+  (package-list-packages)
   (package-install 'use-package))
 (setq use-package-verbose t)
 
