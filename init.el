@@ -255,14 +255,12 @@
 
 ;;;; magit
 (use-package magit
-  ;; :ensure t
-  :bind (("\C-xg" . magit-status)
-         :map magit-status-mode-map
-         ("q" . magit-quit-session))
+  :ensure t
+  :bind (("\C-xg" . magit-status))
   :config
 
-  (eval-after-load 'swiper
-    (setq magit-completing-read-function 'ivy-completing-read))
+  ;; (eval-after-load 'swiper
+  ;;   (setq magit-completing-read-function 'ivy-completing-read))
 
   ;; full-scrreen magit-status
   ;; from magnars --
@@ -271,13 +269,8 @@
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
     ad-do-it
-    (delete-other-windows))
+    (delete-other-windows)))
 
-  (defun magit-quit-session ()
-    "Restores the previous window configuration and kills the magit buffer"
-    (interactive)
-    (kill-buffer)
-    (jump-to-register :magit-fullscreen)))
 
 (use-package projectile
   :ensure t
