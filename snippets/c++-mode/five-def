@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: five-def
+# key: five-def
+# binding: direct-keybinding
+# --
+${1:Name}() = default;
+$1(const $1&) = default;
+$1($1&&) = default;
+
+$1& operator=(const $1&) = default;
+$1& operator=($1&&) = default;
+~$1() = default;
