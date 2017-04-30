@@ -268,7 +268,6 @@
   ;; full-scrreen magit-status
   ;; from magnars --
   ;;    https://github.com/magnars/.emacs.d/blob/master/setup-magit.el
-
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
     ad-do-it
@@ -727,7 +726,7 @@ file of a buffer in an external program."
   (setq elfeed-feeds
         '("http://pragmaticemacs.com"))
   )
-            
+
 
 
 (use-package conda
@@ -758,6 +757,8 @@ file of a buffer in an external program."
 
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
+
+
 
 (provide 'init)
 
