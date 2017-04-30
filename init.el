@@ -728,6 +728,13 @@ file of a buffer in an external program."
    '(conda-anaconda-home *anaconda-directory*)))
 
 
+(use-package flycheck
+  :ensure t
+  :config
+  (defun flycheck-python-setup ()
+    (flycheck-mode))
+  (add-hook 'python-mode-hook #'flycheck-python-setup))
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
