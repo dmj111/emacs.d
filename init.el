@@ -62,7 +62,7 @@
 
 (defconst *is-mac* (eq system-type 'darwin))
 
-(defvar *anaconda-directory* "/Users/dave/anaconda" 
+(defvar *anaconda-directory* "/Users/dave/anaconda"
   "Anaconda installation directory")
 
 ;; Add a local lisp directory to the load path.
