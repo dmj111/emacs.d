@@ -437,7 +437,9 @@
 
 
 ;;;; cpputils-cmake
-(use-package cpputils-cmake)
+(use-package cpputils-cmake
+  :ensure t)
+
 
 (use-package google-c-style
   :ensure t
