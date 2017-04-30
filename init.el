@@ -709,6 +709,16 @@ file of a buffer in an external program."
   (setq wttrin-default-cities '("State College, Pennsylvania")))
 
 
+
+(use-package elfeed
+  :ensure t
+  :config
+  (setq elfeed-feeds
+        '("http://pragmaticemacs.com"))
+  )
+            
+
+
 (use-package conda
   :ensure t
   :config
