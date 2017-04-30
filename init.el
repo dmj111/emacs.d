@@ -709,6 +709,15 @@ file of a buffer in an external program."
   (setq wttrin-default-cities '("State College, Pennsylvania")))
 
 
+;; https://github.com/abo-abo/hydra
+(use-package hydra
+  :config
+  (defhydra hydra-zoom (global-map "<f2>")
+    "zoom"
+    ("g" text-scale-increase "in")
+    ("l" text-scale-decrease "out"))
+  )
+
 
 (use-package elfeed
   :ensure t
