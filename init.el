@@ -797,8 +797,61 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   )
 
 
+
+(add-to-list 'exec-path "/usr/local/opt/llvm/bin/" t)
+
+(use-package flycheck
+  :ensure t
+  :init
+  ;; TODO [ ] https://github.com/abo-abo/hydra/wiki/Flycheck
+  ;; Force flycheck to always use c++11 support. We use
+  ;; the clang language backend so this is set to clang
+  (add-hook 'c++-mode-hook
+            (lambda () (setq flycheck-clang-language-standard "c++11")))
+  ;; Turn flycheck on everywhere
+  (global-flycheck-mode)
+
+  (use-package flycheck-pyflakes
+    :ensure t))
+
+
+;; Load rtags and start the cmake-ide-setup process
+(use-package rtags
+  :ensure t
+  :init
+  ;; Set rtags to enable completions and use the standard keybindings.
+  ;; A list of the keybindings can be found at:
+  ;; http://syamajala.github.io/c-ide.html
+
+  (setq rtags-autostart-diagnostics t)
+  (rtags-diagnostics)
+  (setq rtags-completions-enabled t)
+  (rtags-enable-standard-keybindings))
+
+(use-package cmake-ide
+  :ensure t
+  :init
+  (cmake-ide-setup)
+  ;; Set cmake-ide-flags-c++ to use C++11
+  (setq cmake-ide-flags-c++ (append '("-std=c++11")))
+  ;; We want to be able to compile with a keyboard shortcut
+  (global-set-key (kbd "C-c m") 'cmake-ide-compile)
+)
+
+
+(use-package clang-format
+  :ensure t
+  :init
+  (global-set-key [C-M-tab] 'clang-format-region))
+
+  
+
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
+
+
+
 
 
 
