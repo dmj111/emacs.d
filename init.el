@@ -52,9 +52,9 @@
 
 ;; Give names to some config directories.
 (defconst *config-dir* (file-name-directory load-file-name)
-  "Root directory for the configuration")
+  "Root directory for the configuration.")
 (defconst *local-dir* (expand-file-name "local" *config-dir*)
-  "Root directory for local configuation")
+  "Root directory for local configuation.")
 
 ;; Keep the custom file in local-dir so it is out of git's way, and
 ;; doesn't mess with this file.
@@ -63,7 +63,7 @@
 (defconst *is-mac* (eq system-type 'darwin))
 
 (defvar *anaconda-directory* "/Users/dave/anaconda"
-  "Anaconda installation directory")
+  "Anaconda installation directory.")
 
 ;; Add a local lisp directory to the load path.
 (add-to-list 'load-path *local-dir*)
@@ -126,6 +126,7 @@
   (message "foo"))
 (define-key dmj-map (kbd "[") 'dmj-test-foo)
 (define-key dmj-map (kbd "l") 'delete-trailing-whitespace)
+(define-key dmj-map (kbd "w") 'whitespace-mode)
 
 
 
@@ -141,18 +142,23 @@
 (when *is-mac*
   (add-to-list 'package-archives
                '("marmalade" . "http://marmalade-repo.org/packages/") t))
+(require 'package)
+(add-to-list 'package-archives
+         '("melpa" . "http://melpa.org/packages/") t)
 
+(when (not package-archive-contents)
+    (package-refresh-contents))
 
 ;; make sure use-package is loaded
 (unless (package-installed-p 'use-package)
-  (package-list-packages)
   (package-install 'use-package))
-(setq use-package-verbose t)
 
+(require 'use-package)
 
 (use-package zenburn-theme :ensure t)
+
 (defvar my-default-theme 'zenburn
-  "default theme to use at startup")
+  "Default theme to use at startup.")
 
 ;; After init.el is loaded, set the theme.
 (eval-after-load 'init
@@ -278,17 +284,16 @@
   :ensure t
   :diminish projectile-mode
   :config
-  (progn
-    (setq projectile-completion-system 'ivy)
-    (setq projectile-indexing-method 'alien)
-    (setq projectile-enable-caching t)
-    (projectile-global-mode t)))
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-enable-caching t)
+  (projectile-global-mode t))
 
 
 ;;;; python
 (use-package python
   :ensure t
-  :config
+  :init
   (defun my-python-mode-hook ()
     "Stuff to run when python-mode loads"
     (setq-default py-indent-offset 4)
@@ -299,13 +304,12 @@
     (message "ran my-python-mode-hook"))
 
   (add-hook 'python-mode-hook 'my-python-mode-hook)
-
   (use-package flymake-python-pyflakes-autoloads
-    :config
+    :init
     (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
 
   (use-package jedi-autoloads
-    :config
+    :init
     (add-hook 'python-mode-hook 'jedi:setup)
     (setq jedi:setup-keys t)
     (setq jedi:complete-on-dot t)))
@@ -352,6 +356,11 @@
 ;; TODO: flyspell on mac!!
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
+(add-hook 'prog-mode-hook
+          (lambda () (interactive)
+            (setq show-trailing-whitespace 1)))
+
+
 ;; Used this at previous job - not sure if still want it.
 ;; (add-hook 'prog-mode-hook
 ;;           (lambda () (add-hook 'before-save-hook
@@ -388,12 +397,12 @@
   :ensure t
   :mode (("\\.json\\'" . js-mode)
          ("\\.js\\'" . js2-mode))
-  :config
+  :init
   (add-hook 'js-mode-hook 'js2-minor-mode)
   (setq js2-highlight-level 3)
 
   (use-package ac-js2
-    :config
+    :init
     (add-hook 'js2-mode-hook 'ac-js2-mode)))
 
 ;;;; auto-complete
@@ -411,23 +420,25 @@
 ;;;; yasnippet
 (use-package yasnippet
   :ensure t
-  :config
-  (yas-global-mode -1)
+  :init
   (add-hook 'prog-mode-hook 'yas-minor-mode)
   (add-hook 'snippet-mode-hook 'yas-minor-mode)
+
+  :config
   (let ((local (expand-file-name "snippets" *local-dir*)))
     (when (file-exists-p local)
       (add-to-list 'yas-snippet-dirs local)))
   (let ((local (expand-file-name "snippets" *config-dir*)))
     (when (file-exists-p local)
       (add-to-list 'yas-snippet-dirs local)))
+  (yas-reload-all)
+  (yas-global-mode -1)
   (setq yas-prompt-functions
         '(yas-ido-prompt
           yas-x-prompt
           yas-dropdown-prompt
           yas-completing-prompt
           yas-no-prompt)))
-
 
 ;;;; c++
 
@@ -442,7 +453,7 @@
 
 (use-package google-c-style
   :ensure t
-  :config
+  :init
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
 (use-package org
@@ -513,7 +524,7 @@ Added: %U")))
   (setq org-drill-add-random-noise-to-intervals-p t))
 
 (use-package flycheck
-  :config
+  :init
   (add-hook 'js-mode-hook
           (lambda () (flycheck-mode t))))
 
@@ -696,7 +707,7 @@ file of a buffer in an external program."
 (use-package golden-ratio
   :ensure t
   :diminish golden-ratio-mode
-  :init
+  :config
   (golden-ratio-mode 1))
 
 ;; google-this
@@ -706,7 +717,7 @@ file of a buffer in an external program."
 
 (use-package wttrin
   :commands (wttrin)
-  :init
+  :config
   (setq wttrin-default-cities '("State College, Pennsylvania")))
 
 
@@ -750,26 +761,13 @@ file of a buffer in an external program."
 
 (use-package flycheck
   :ensure t
-  :config
+  :init
   (defun flycheck-python-setup ()
     (flycheck-mode))
   (add-hook 'python-mode-hook #'flycheck-python-setup))
 
 
 
-
-(use-package rtags
-  :ensure t)
-
-(use-package company-rtags
-  :ensure t
-  :init
-  (setq rtags-completions-enabled t)
-  (eval-after-load 'company
-    '(add-to-list
-      'company-backends 'company-rtags))
-  (setq rtags-autostart-diagnostics t)
-  (rtags-enable-standard-keybindings))
 
 ;; http://jblevins.org/log/mmm
 (defun my-mmm-markdown-auto-class (lang &optional submode)
@@ -785,7 +783,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package mmm-mode
   :ensure t
-  :init
+  :config
   (setq mmm-global-mode 'maybe)
 
   ;; Note: rememb
@@ -802,7 +800,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package flycheck
   :ensure t
-  :init
+  :config
   ;; TODO [ ] https://github.com/abo-abo/hydra/wiki/Flycheck
   ;; Force flycheck to always use c++11 support. We use
   ;; the clang language backend so this is set to clang
@@ -817,8 +815,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 ;; Load rtags and start the cmake-ide-setup process
 (use-package rtags
-  :ensure t
-  :init
+  :disabled t
+  :config
   ;; Set rtags to enable completions and use the standard keybindings.
   ;; A list of the keybindings can be found at:
   ;; http://syamajala.github.io/c-ide.html
@@ -826,11 +824,27 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   (setq rtags-autostart-diagnostics t)
   (rtags-diagnostics)
   (setq rtags-completions-enabled t)
-  (rtags-enable-standard-keybindings))
+  (rtags-enable-standard-keybindings)
+
+  (use-package company-rtags
+    :ensure t
+    :config
+    (setq rtags-completions-enabled t)
+    (eval-after-load 'company
+      '(add-to-list
+        'company-backends 'company-rtags))
+    (setq rtags-autostart-diagnostics t)
+    (rtags-enable-standard-keybindings)))
+
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode 1)
+  (delete 'company-semantic company-backends))
 
 (use-package cmake-ide
-  :ensure t
-  :init
+  :disabled t
+  :config
   (cmake-ide-setup)
   ;; Set cmake-ide-flags-c++ to use C++11
   (setq cmake-ide-flags-c++ (append '("-std=c++11")))
@@ -841,11 +855,68 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 (use-package clang-format
   :ensure t
-  :init
+  :config
   (global-set-key [C-M-tab] 'clang-format-region))
 
-  
 
+(use-package ggtags
+  :disabled t
+  )
+
+
+(use-package cc-mode
+  :config
+  (use-package semantic
+    :config
+    (global-semanticdb-minor-mode 1)
+    (global-semantic-idle-scheduler-mode 1)
+    (global-semantic-stickyfunc-mode 1)
+
+    (semantic-mode 1)
+
+    (defun alexott/cedet-hook ()
+      (local-set-key "\C-c\C-j" 'semantic-ia-fast-jump)
+      (local-set-key "\C-c\C-s" 'semantic-ia-show-summary))
+    (add-hook 'c-mode-common-hook 'alexott/cedet-hook)
+    (add-hook 'c-mode-hook 'alexott/cedet-hook)
+    (add-hook 'c++-mode-hook 'alexott/cedet-hook)))
+
+
+;; Enable EDE only in C/C++
+(use-package ede
+  :config
+  (global-ede-mode))
+
+(use-package helm-gtags
+  :ensure t
+  :init
+  (setq helm-gtags-ignore-case t
+        helm-gtags-auto-update t
+        helm-gtags-use-input-at-cursor t
+        helm-gtags-pulse-at-cursor t
+        helm-gtags-prefix-key "\C-cg"
+        helm-gtags-suggested-key-mapping t)
+  ;; Enable helm-gtags-mode in Dired so you can jump to any tag
+  ;; when navigate project tree with Dired
+  (add-hook 'dired-mode-hook 'helm-gtags-mode)
+
+  ;; Enable helm-gtags-mode in Eshell for the same reason as above
+  (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+
+  ;; Enable helm-gtags-mode in languages that GNU Global supports
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-mode-hook 'helm-gtags-mode)
+  (add-hook 'java-mode-hook 'helm-gtags-mode)
+  (add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+  ;; key bindings
+  (with-eval-after-load 'helm-gtags
+    (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+    (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+    (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+    (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+    (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+    (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
 
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
