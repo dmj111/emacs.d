@@ -918,11 +918,15 @@ If SUBMODE is not provided, use `LANG-mode' by default."
     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
 
+
+(use-package move-text
+  :ensure t
+  :config
+  (global-set-key [\M-\S-up] 'move-text-up)
+  (global-set-key [\M-\S-down] 'move-text-down))
+
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
-
-
-
 
 
 
