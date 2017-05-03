@@ -171,7 +171,11 @@
 
 (use-package dash :ensure t)
 (use-package markdown-mode :ensure t)
-(use-package paredit :ensure t)
+
+;; http://danmidwood.com/content/2014/11/21/animated-paredit.html
+(use-package paredit :ensure t
+  :init
+  (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode))))
 
 ;;;; Theme
 
