@@ -553,13 +553,52 @@ Added: %U")))
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+
+;; [ ] https://github.com/abo-abo/swiper
+;; [ ] http://oremacs.com/swiper/
+(use-package ivy :ensure t
+  :diminish (ivy-mode . "")
+  :bind
+  (("C-c C-r" . ivy-resume)
+   ("C-x b" . ivy-switch-buffer)
+   :map ivy-mode-map
+   ("C-'" . ivy-avy))
+  :config
+  (ivy-mode 1)
+  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (setq ivy-use-virtual-buffers t)
+  ;; number of result lines to display
+  (setq ivy-height 10)
+  ;; does not count candidates
+  (setq ivy-count-format "")
+  ;; no regexp by default
+  (setq ivy-initial-inputs-alist nil)
+  ;; configure regexp engine.
+  (setq ivy-re-builders-alist
+	;; allow input not in order
+        '((t   . ivy--regex-ignore-order)))
+  ;;(setq ivy-count-format "(%d/%d) ")
+  )
+
+
+
 (use-package counsel :ensure t)
+;; commands
+;; counsel-ag grep
+;; counsel-recentf
+;; counsel-git-grep
+;; counsel-git find file
+;; counsel-describbindings
+;; counsel-yank-pop
+;; counsel-projectile
+
 (use-package swiper
   :ensure t
   ;; C-j to select current
   ;; C-M-j to select current value (creat new file)
   ;; M-j to select word at point.
   :bind (("C-s" . swiper)
+         ("C-x C-r" . counsel-recentf)
          ("M-x" . counsel-M-x)
          ("\C-x\C-m" . counsel-M-x)
          ("\C-xm" . counsel-M-x)
@@ -580,9 +619,10 @@ Added: %U")))
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-height 10)
-  (setq ivy-count-format "(%d/%d) "))
+  (setq ivy-count-format "(%d/%d) ")
+  )
 
-
+;; [ ] http://tuhdo.github.io/helm-intro.html
 (use-package helm
   :disabled t
   :config
@@ -593,7 +633,6 @@ Added: %U")))
   (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
   ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (message "used helm"))
-
 
 
 (use-package helm
@@ -916,7 +955,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   ;; key bindings
   (with-eval-after-load 'helm-gtags
     (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-    (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+    (define-key helm-gtags-mode-map (kbd "C-c g C-j") 'helm-gtags-select)
     (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
     (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
@@ -928,6 +967,16 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :config
   (global-set-key [\M-\S-up] 'move-text-up)
   (global-set-key [\M-\S-down] 'move-text-down))
+
+(use-package wgrep
+  :ensure t)
+
+;; wgrep replacement :
+;; https://sam217pa.github.io/2016/09/11/nuclear-power-editing-via-ivy-and-ag/
+;; counsel-ag,
+;; C-c C-o ivy occur
+;; C-x C-q - wgrep
+;;
 
 ;; Load the local file, if it exists.
 (require 'init-local nil t)
