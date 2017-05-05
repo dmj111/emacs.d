@@ -710,12 +710,15 @@ file of a buffer in an external program."
 
 
 ;; http://stackoverflow.com/a/13408008
-(require 'ansi-color)
-(defun colorize-compilation-buffer ()
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+(use-package ansi-color
+  :ensure t
+  :init
+  (defun colorize-compilation-buffer ()
+    "Colorize compiler output."
+    (read-only-mode -1)
+    (ansi-color-apply-on-region compilation-filter-start (point))
+    (read-only-mode 1))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
 
 
