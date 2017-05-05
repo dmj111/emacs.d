@@ -385,15 +385,11 @@
   (setq undo-tree-visualizer--timestamps t))
 
 
-
 ;;;; smex
 (use-package smex
-  :disabled t
-  :bind (("M-x" . smex)
-         ("M-X" . smex-major-mode-commands))
+  :ensure t
   :config
   (smex-initialize))
-
 
 
 ;;;; js2
