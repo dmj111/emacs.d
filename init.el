@@ -977,7 +977,23 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;; C-x C-q - wgrep
 ;;
 
-;; Load the local file, if it exists.
+
+;; http://syamajala.github.io/c-ide.html
+(require 'rtags)
+(require 'company-rtags)
+
+(setq rtags-completions-enabled t)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends 'company-rtags))
+(setq rtags-autostart-diagnostics t)
+(rtags-enable-standard-keybindings)
+
+(use-package heml-rtags
+  :ensure t
+  :config
+  (setq rtags-use-helm t))
+  ;; Load the local file, if it exists.
 (require 'init-local nil t)
 
 
