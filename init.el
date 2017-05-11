@@ -857,7 +857,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 ;; Load rtags and start the cmake-ide-setup process
 (use-package rtags
-  :disabled t
+  :ensure t
   :config
   ;; Set rtags to enable completions and use the standard keybindings.
   ;; A list of the keybindings can be found at:
@@ -876,24 +876,19 @@ If SUBMODE is not provided, use `LANG-mode' by default."
       '(add-to-list
         'company-backends 'company-rtags))
     (setq rtags-autostart-diagnostics t)
-    (rtags-enable-standard-keybindings)))
+    (rtags-enable-standard-keybindings))
+
+  ;; Load the local file, if it exists.
+  )
+;; (use-package heml-rtags
+;;   :ensure t
+;;   :config
+;;   (setq rtags-use-helm t))
 
 (use-package company
   :ensure t
   :config
-  (global-company-mode 1)
-  (delete 'company-semantic company-backends))
-
-(use-package cmake-ide
-  :disabled t
-  :config
-  (cmake-ide-setup)
-  ;; Set cmake-ide-flags-c++ to use C++11
-  (setq cmake-ide-flags-c++ (append '("-std=c++11")))
-  ;; We want to be able to compile with a keyboard shortcut
-  (global-set-key (kbd "C-c m") 'cmake-ide-compile)
-)
-
+  (global-company-mode 1))
 
 (use-package clang-format
   :ensure t
@@ -979,21 +974,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 
 ;; http://syamajala.github.io/c-ide.html
-(require 'rtags)
-(require 'company-rtags)
 
-(setq rtags-completions-enabled t)
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends 'company-rtags))
-(setq rtags-autostart-diagnostics t)
-(rtags-enable-standard-keybindings)
-
-(use-package heml-rtags
-  :ensure t
-  :config
-  (setq rtags-use-helm t))
-  ;; Load the local file, if it exists.
+;; Load the local file, if it exists.
 (require 'init-local nil t)
 
 
