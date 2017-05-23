@@ -858,7 +858,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 ;; Load rtags and start the cmake-ide-setup process
 (use-package rtags
-  :ensure t
+  :disabled t
   :config
   ;; Set rtags to enable completions and use the standard keybindings.
   ;; A list of the keybindings can be found at:
@@ -907,6 +907,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 (use-package cc-mode
   :config
   (use-package semantic
+    :disabled t
     :config
     (global-semanticdb-minor-mode 1)
     (global-semantic-idle-scheduler-mode 1)
@@ -924,11 +925,12 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 
 ;; Enable EDE only in C/C++
 (use-package ede
+  :disabled t
   :config
   (global-ede-mode))
 
 (use-package helm-gtags
-  :ensure t
+  :disabled t
   :init
   (setq helm-gtags-ignore-case t
         helm-gtags-auto-update t
