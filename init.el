@@ -456,6 +456,8 @@
   :init
   (add-hook 'c-mode-common-hook 'google-set-c-style))
 
+(add-hook 'ediff-prepare-buffer-hook #'outline-show-all)
+
 (use-package org
   :bind (([f6] . org-capture))
   :config
