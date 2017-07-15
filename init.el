@@ -515,7 +515,7 @@ Added: %U")))
   ;; http://doc.norang.ca/org-mode.html#Refiling
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
-  (setq org-refile-targets (quote ((nil :level . 2))))
+  (setq org-refile-targets (quote ((nil :maxlevel . 3))))
 )
 
 (use-package org-plus-contrib-autoloads
