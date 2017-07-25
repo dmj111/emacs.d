@@ -503,7 +503,7 @@ Will work on both org-mode and any mode that accepts plain html."
           ("b" "Bookmark" entry (file "bookmarks.org")
            "* %?\n %I")
           ;; http://members.optusnet.com.au/~charles57/GTD/datetree.html
-          ("n" "Notes" entry (file+datetree "log.org")
+          ("n" "Notes inbox" entry (file+headline "log.org" "Inbox")
            "* %^{Description} %^g %?
 Added: %U")
           ("t" "make a task" entry (file+datetree "log.org")
