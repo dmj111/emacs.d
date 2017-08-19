@@ -573,7 +573,7 @@ Added: %U")))
   (setq ivy-initial-inputs-alist nil)
   ;; configure regexp engine.
   (setq ivy-re-builders-alist
-	;; allow input not in order
+        ;; allow input not in order
         '((t   . ivy--regex-ignore-order)))
   ;;(setq ivy-count-format "(%d/%d) ")
   )
@@ -889,7 +889,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;;   (setq rtags-use-helm t))
 
 (use-package company
-  :ensure t
+  :disabled t
   :config
   (global-company-mode 1))
 
