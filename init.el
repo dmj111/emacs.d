@@ -111,9 +111,9 @@
 
 ;; http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/
 ;; unset C- and M- digit keys
-(dotimes (n 10)
-  (global-unset-key (kbd (format "C-%d" n)))
-  (global-unset-key (kbd (format "M-%d" n))))
+(dotimes (n 9)
+  (global-unset-key (kbd (format "C-%d" (+ 1 n))))
+  (global-unset-key (kbd (format "M-%d" (+ 1 n)))))
 
 (define-prefix-command 'dmj-map)
 (global-set-key (kbd "C-1") 'dmj-map)
