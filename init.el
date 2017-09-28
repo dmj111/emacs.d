@@ -308,15 +308,16 @@
     (message "ran my-python-mode-hook"))
 
   (add-hook 'python-mode-hook 'my-python-mode-hook)
-  (use-package flymake-python-pyflakes-autoloads
-    :init
-    (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
+  ;; (use-package flymake-python-pyflakes-autoloads
+  ;;   :init
+  ;;   (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
 
-  (use-package jedi-autoloads
-    :init
-    (add-hook 'python-mode-hook 'jedi:setup)
-    (setq jedi:setup-keys t)
-    (setq jedi:complete-on-dot t)))
+  ;; (use-package jedi-autoloads
+  ;;   :init
+  ;;   (add-hook 'python-mode-hook 'jedi:setup)
+  ;;   (setq jedi:setup-keys t)
+  ;;   (setq jedi:complete-on-dot t))
+  )
 
 ;;;; Shell-script mode
 
@@ -849,8 +850,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   ;; TODO [ ] https://github.com/abo-abo/hydra/wiki/Flycheck
   ;; Force flycheck to always use c++11 support. We use
   ;; the clang language backend so this is set to clang
-  (add-hook 'c++-mode-hook
-            (lambda () (setq flycheck-clang-language-standard "c++11")))
+  ;; (add-hook 'c++-mode-hook
+  ;;           (lambda () (setq flycheck-clang-language-standard "c++11")))
   ;; Turn flycheck on everywhere
   (global-flycheck-mode)
 
