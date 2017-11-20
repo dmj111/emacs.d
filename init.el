@@ -517,14 +517,23 @@ Added: %U")))
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-targets (quote ((nil :maxlevel . 3))))
+
+
+  ;; active Babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sh . t)
+     (emacs-lisp . t)
+     ))
+
 )
 
-(use-package org-plus-contrib-autoloads
-  :commands org-drill)
+;; (use-package org-plus-contrib-autoloads
+;;   :commands org-drill)
 
-(use-package org-drill
-  :config
-  (setq org-drill-add-random-noise-to-intervals-p t))
+;; (use-package org-drill
+;;   :config
+;;   (setq org-drill-add-random-noise-to-intervals-p t))
 
 (use-package flycheck
   :init
