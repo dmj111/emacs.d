@@ -746,6 +746,7 @@ file of a buffer in an external program."
   (set-frame-font "-*-Andale Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
   (set-frame-font "Cousine-14")
   (set-frame-font "source code pro-12")
+  ;; Test string for fonts:
   ;; abcdefghijklmnopqrstuvqxyz
   ;; ABCDEFGHIJKLMNOPQRSTUVQXYZ
   ;; 0123456789
@@ -755,8 +756,6 @@ file of a buffer in an external program."
   ;; 2 Z z
   ;; ( { [ ] } )
 )
-
-
 
 (use-package golden-ratio
   :ensure t
@@ -790,8 +789,7 @@ file of a buffer in an external program."
   :ensure t
   :config
   (setq elfeed-feeds
-        '("http://pragmaticemacs.com"))
-  )
+        '("http://pragmaticemacs.com")))
 
 
 
