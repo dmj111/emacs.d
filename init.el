@@ -758,7 +758,7 @@ file of a buffer in an external program."
 )
 
 (use-package golden-ratio
-  :ensure t
+  :disabled t
   :diminish golden-ratio-mode
   :config
   (golden-ratio-mode 1))
