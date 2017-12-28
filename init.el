@@ -524,6 +524,7 @@ Added: %U")))
    'org-babel-load-languages
    '((sh . t)
      (emacs-lisp . t)
+     (python . t)
      ))
 
 )
